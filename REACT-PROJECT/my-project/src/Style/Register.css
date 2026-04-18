@@ -1,0 +1,12 @@
+@import "./Login.css";
+
+.register-page .auth-card {
+  max-width: 500px;
+}
+
+.register-page input[type="file"] {
+  padding: 10px;
+  border: 1px dashed #1e293b;
+  background: #020617;
+  color: #94a3b8;
+}
