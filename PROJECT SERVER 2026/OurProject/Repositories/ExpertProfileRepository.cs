@@ -1,0 +1,66 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Repository.Interfaces;
+using Repository.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Repository.Repositories
+{
+    public class ExpertProfileRepository : IRepository<ExpertProfile>
+    {
+        private readonly IContext context;
+
+        public ExpertProfileRepository(IContext context)
+        {
+            this.context = context;
+        }
+
+        public async Task<List<ExpertProfile>> GetAll()
+        {
+            return await context.expertProfiles
+                .Include(ep => ep.User) // חשוב! כדי שנדע מי המומחה (שם, אימייל וכו')
+                .Where(x => x.User.IsActive && x.User.IsExpert)
+                .ToListAsync();
+        }
+      
+        public async Task<ExpertProfile> GetById(int id)
+        {
+            return await context.expertProfiles
+                .Include(ep => ep.User)
+                 .Where(x => x.User.IsActive && x.User.IsExpert)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<ExpertProfile> AddItem(ExpertProfile item)
+        {
+            await context.expertProfiles.AddAsync(item);
+             context.save();
+            return item;
+        }
+
+        public async Task UpdateItem(int id, ExpertProfile item)
+        {
+            ExpertProfile ep = await context.expertProfiles.FindAsync(id);
+            if (ep != null)
+            {
+                // עדכון השדות המקצועיים בלבד
+                ep.Category = item.Category;
+                ep.Bio = item.Bio;
+                ep.BasePrice = item.BasePrice;
+
+                 context.save();
+            }
+        }
+
+
+        public async Task DeleteItem(int id)
+        {
+         
+            throw new NotImplementedException();
+
+        }
+    }
+}

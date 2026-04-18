@@ -1,0 +1,61 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\Gemini_Generated_Image_tykjqtykjqtykjqt (1).png",
+      "PackagePath": "staticwebassets\\Images\\Gemini_Generated_Image_tykjqtykjqtykjqt (1).png"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\IMG_1350.JPG",
+      "PackagePath": "staticwebassets\\Images\\IMG_1350.JPG"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\Screenshot_20260311-023341_WhatsApp.jpg",
+      "PackagePath": "staticwebassets\\Images\\Screenshot_20260311-023341_WhatsApp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\default.png",
+      "PackagePath": "staticwebassets\\Images\\default.png"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\image (50).png",
+      "PackagePath": "staticwebassets\\Images\\image (50).png"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\ך.png",
+      "PackagePath": "staticwebassets\\Images\\ך.png"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\צילום מסך 2024-10-14 224858.png",
+      "PackagePath": "staticwebassets\\Images\\צילום מסך 2024-10-14 224858.png"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\צילום מסך 2024-10-18 001433.png",
+      "PackagePath": "staticwebassets\\Images\\צילום מסך 2024-10-18 001433.png"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\צילום מסך 2024-10-31 010746.png",
+      "PackagePath": "staticwebassets\\Images\\צילום מסך 2024-10-31 010746.png"
+    },
+    {
+      "Id": "C:\\Users\\user1\\Desktop\\THE ALL PROJECT 2026\\PROJECT SERVER 2026\\WebApi\\wwwroot\\Images\\צילום מסך 2026-03-11 001641.png",
+      "PackagePath": "staticwebassets\\Images\\צילום מסך 2026-03-11 001641.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebApi.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WebApi.props",
+      "PackagePath": "build\\WebApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WebApi.props",
+      "PackagePath": "buildMultiTargeting\\WebApi.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WebApi.props",
+      "PackagePath": "buildTransitive\\WebApi.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

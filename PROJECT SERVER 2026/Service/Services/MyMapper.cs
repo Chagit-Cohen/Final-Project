@@ -1,0 +1,34 @@
+﻿using AutoMapper;
+using Service.Dto;
+//using Service.Interfaces;
+//using Repository.Interfaces;
+using Repository.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Service.Services
+{
+    public class MyMapper:Profile
+    {
+        public MyMapper()
+        {
+            CreateMap<ExpertProfile, ExpertProfileDto>()
+              .ForMember(dest => dest.FullName,
+              opt => opt.MapFrom(src => src.User.FullName))
+           .ForMember(dest => dest.City,
+            opt => opt.MapFrom(src => src.User.City));
+
+            CreateMap<ExpertProfileDto, ExpertProfile>();
+
+            CreateMap<User, UserDto>();
+
+
+            CreateMap<UserDto, User>()
+                .ForMember("ProfileUrl",
+                    x => x.MapFrom(y => y.ProfileImage != null ? y.ProfileImage.FileName : null));
+        }
+    }
+}
