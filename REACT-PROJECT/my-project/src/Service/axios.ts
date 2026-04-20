@@ -29,13 +29,3 @@ axiosInstance.interceptors.response.use(
 export default axiosInstance
 
 
-// if (error.response &&error.response.status === 401 &&!error.config.url.includes("/api/UserLogin")) {
-    //   window.location.href = "/Login";
-    // }
-
-// axiosInstance.interceptors.response.use(response => {
-//     if (response.status === 401) {
-//         location.href = '../Pages/Login'
-//     }
-//     return response
-// })
