@@ -53,5 +53,18 @@ namespace WebApi.Controllers
         {
             await iservice.DeleteItem(id);
         }
+        [Authorize]
+        [HttpPut("return/{id}")]
+        public async Task Restore(int id)
+        {
+            await iservice.RestoreItem(id);
+        }
+        [Authorize]
+        [HttpGet("justToTheUser/{id}")]
+        public async Task<ExpertProfileDto> GetJustToTheUser(int id)
+        {
+            return await iservice.GetByIdJustToTheUser(id);
+        }
+
     }
 }

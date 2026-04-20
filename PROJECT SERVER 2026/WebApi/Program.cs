@@ -83,7 +83,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IServiceUser<UserDto>, UserService>();
 
-builder.Services.AddScoped<IRepository<ExpertProfile>, ExpertProfileRepository>();
+builder.Services.AddScoped<IRepositoryExpert<ExpertProfile>, ExpertProfileRepository>();
+
 builder.Services.AddScoped<IServiceUser<UserDto>, UserService>();
 builder.Services.AddScoped<IServiceExpert<ExpertProfileDto>, ExpertProfileService>();
 

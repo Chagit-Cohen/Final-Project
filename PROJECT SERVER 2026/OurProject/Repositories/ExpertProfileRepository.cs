@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public class ExpertProfileRepository : IRepository<ExpertProfile>
+    public class ExpertProfileRepository : IRepositoryExpert<ExpertProfile>
     {
         private readonly IContext context;
 
@@ -62,6 +62,12 @@ namespace Repository.Repositories
          
             throw new NotImplementedException();
 
+        }
+        public async Task<ExpertProfile> GetByIdJustToTheUser(int id)
+        {
+            return await context.expertProfiles
+                .Include(ep => ep.User)
+                .FirstOrDefaultAsync(x => x.UserId == id && x.User.IsActive);
         }
     }
 }

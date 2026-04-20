@@ -13,11 +13,11 @@ namespace Service.Services
 {
     public class ExpertProfileService : IServiceExpert<ExpertProfileDto>
     {
-        private readonly IRepository<ExpertProfile> expertRepository;
+        private readonly IRepositoryExpert<ExpertProfile> expertRepository;
         private readonly IRepository<User> userRepository;
         private readonly IMapper mapper;
 
-        public ExpertProfileService(IRepository<ExpertProfile> expertRepository, IRepository<User> userRepository, IMapper mapper)
+        public ExpertProfileService(IRepositoryExpert<ExpertProfile> expertRepository, IRepository<User> userRepository, IMapper mapper)
         {
             this.expertRepository = expertRepository;
             this.userRepository = userRepository;
@@ -84,6 +84,20 @@ namespace Service.Services
             ep.AverageRating = ((ep.AverageRating * (ep.NumberOfRaiting - 1)) + rating) / ep.NumberOfRaiting;
 
             await expertRepository.UpdateItem(idExpert, ep);
+        }
+        public async Task RestoreItem(int id)
+        {
+            ExpertProfile ep = await expertRepository.GetByIdJustToTheUser(id);
+            if (ep != null)
+            {
+                ep.User.IsExpert = true;
+                await userRepository.UpdateItem(ep.UserId, ep.User);
+            }
+        }
+        public async Task<ExpertProfileDto> GetByIdJustToTheUser(int id)
+        {
+            ExpertProfile ep = await expertRepository.GetByIdJustToTheUser(id);
+            return mapper.Map<ExpertProfile, ExpertProfileDto>(ep);
         }
     }
 }

@@ -11,7 +11,7 @@ export default function RegisterExpert() {
   const navigate = useNavigate();
 
 
-  const { user } = useAuthContext(); 
+  const { user,setUser } = useAuthContext(); 
   const [formData, setFormData] = useState({
     description: "",
     basePrice: "",
@@ -49,6 +49,10 @@ export default function RegisterExpert() {
 
       // כאן תחליפי לפונקציית השירות שלך
        await register(data);
+         setUser({
+      ...user!,
+      isExpert: true
+    });
 
       setMessage("המומחה נרשם בהצלחה");
 

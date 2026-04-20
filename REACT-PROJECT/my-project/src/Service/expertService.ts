@@ -35,3 +35,11 @@ export const deleteExpertById = async (id: number) => {
     const response = await axios.delete(`/api/ExpertProfile/${id}`)
     return response.data
 }
+export async function returnExpertById(id: number) {
+  const res = await axios.put(`/api/ExpertProfile/return/${id}`);
+  return res.data;
+}
+export async function getExpertByIdJustToTheUser(id: number) {
+  const res = await axios.get(`/api/ExpertProfile/justToTheUser/${id}`);
+  return res.data;
+}

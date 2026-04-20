@@ -1,9 +1,10 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { useAuthContext } from "../Authoration/useAuthContext";
 import { updateProfile } from "../Service/userService";
-import { updateExpertProfile,getExpertsById,deleteExpertById } from "../Service/expertService";
+import { updateExpertProfile, getExpertsById, deleteExpertById, returnExpertById,getExpertByIdJustToTheUser } from "../Service/expertService";
 
 export default function Profile() {
+  const [hasExpertProfile, setHasExpertProfile] = useState(false);
   const { user, setUser } = useAuthContext();
   const [showExpertDetails, setShowExpertDetails] = useState(false);
   const [userFormData, setUserFormData] = useState({
@@ -13,9 +14,9 @@ export default function Profile() {
   });
 
   const [expertFormData, setExpertFormData] = useState({
-    category:"",
+    category: "",
     bio: "",
-    basePrice:""
+    basePrice: ""
   });
 
   const [message, setMessage] = useState("");
@@ -34,22 +35,25 @@ export default function Profile() {
 
   useEffect(() => {
   async function loadExpert() {
-    if (!user?.id || !user?.isExpert) return;
+    if (!user?.id) return;
 
     try {
-      const  ex = await getExpertsById(user.id);
+      const ex = await getExpertByIdJustToTheUser(user.id);
 
-      
+      if (!ex) {
+        setHasExpertProfile(false);
+        return;
+      }
 
+      setHasExpertProfile(true);
 
       setExpertFormData({
         category: ex.category || "",
         bio: ex.bio || "",
         basePrice: ex.basePrice || ""
       });
-      
     } catch (err) {
-      console.log(err);
+      setHasExpertProfile(false);
     }
   }
 
@@ -114,14 +118,14 @@ export default function Profile() {
     event.preventDefault();
     setError("");
     setMessage("");
-    if(!user)return;
+    if (!user) return;
     try {
       const data = new FormData();
       data.append("Category", expertFormData.category);
       data.append("Bio", expertFormData.bio);
       data.append("BasePrice", expertFormData.basePrice);
 
-       data.append("City", user.city);
+      data.append("City", user.city);
       data.append("FullName", user.fullName);
 
 
@@ -135,7 +139,7 @@ export default function Profile() {
 
 
 
-   async function handleDeleteExpert() {
+  async function handleDeleteExpert() {
     setError("");
     setMessage("");
     if (!user) return;
@@ -147,15 +151,44 @@ export default function Profile() {
         ...user,
         isExpert: false
       });
-
+      setHasExpertProfile(true);
       setShowExpertDetails(false);
       setMessage("המומחה נמחק בהצלחה");
     } catch (err: any) {
       setError(err.response?.data?.message || "מחיקת מומחה נכשלה");
     }
   }
+  async function handleReturnExpert() {
+  setError("");
+  setMessage("");
+  if (!user) return;
 
+  try {
+    await returnExpertById(user.id);
 
+    const ex = await getExpertByIdJustToTheUser(user.id);
+
+    if (ex) {
+      setExpertFormData({
+        category: ex.category || "",
+        bio: ex.bio || "",
+        basePrice: ex.basePrice || ""
+      });
+
+      setHasExpertProfile(true);
+    }
+
+    setUser({
+      ...user,
+      isExpert: true
+    });
+
+    setShowExpertDetails(true);
+    setMessage("פרופיל המומחה הוחזר בהצלחה");
+  } catch (err: any) {
+    setError(err.response?.data?.message || "החזרת מומחה נכשלה");
+  }
+}
 
 
   return (
@@ -236,9 +269,19 @@ export default function Profile() {
               </div>
 
               <button type="submit">שמור פרטי מומחה</button>
-              <button type="button" onClick={handleDeleteExpert}>הפוך פרופיל מומחה ל- לא פעיל</button>
+              <button type="button" onClick={handleDeleteExpert}>
+                הפוך פרופיל מומחה ללא פעיל
+              </button>
             </form>
           )}
+        </div>
+      )}
+
+      {!user?.isExpert && hasExpertProfile && (
+        <div>
+          <button type="button" onClick={handleReturnExpert}>
+            החזר פרופיל מומחה
+          </button>
         </div>
       )}
 

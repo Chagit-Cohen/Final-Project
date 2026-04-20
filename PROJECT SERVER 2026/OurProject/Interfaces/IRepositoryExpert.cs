@@ -1,25 +1,24 @@
-﻿using Service.Dto;
+﻿using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Interfaces
+namespace Repository.Interfaces
 {
-   
-        public interface IServiceExpert<T>
-        {
+    public interface IRepositoryExpert<T>
+    {
+      
             Task<List<T>> GetAll();
             Task<T> GetById(int id);
 
             Task<T> AddItem(T item);
 
-            Task UpdateItem(int id, ExpertProfileDto item);
+            Task UpdateItem(int id, T item);
 
             Task DeleteItem(int id);
-            Task RestoreItem(int id);
-        Task<T> GetByIdJustToTheUser(int id);
+            Task<T> GetByIdJustToTheUser(int id);
+
     }
-    
 }
