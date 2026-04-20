@@ -86,7 +86,7 @@ export default function Profile() {
           />
         </div>
 
-        <div>
+        <div> 
           <label>תמונת פרופיל:</label>
           <input
             type="file"
