@@ -8,8 +8,8 @@ namespace WebApi.Controllers
     [ApiController]
     public class ExpertProfileController : ControllerBase
     {
-        private readonly IService<ExpertProfileDto> iservice;
-        public ExpertProfileController(IService<ExpertProfileDto> iservice)
+        private readonly IServiceExpert<ExpertProfileDto> iservice;
+        public ExpertProfileController(IServiceExpert<ExpertProfileDto> iservice)
         {
             this.iservice = iservice;
         }

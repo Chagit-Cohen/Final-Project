@@ -124,9 +124,9 @@ namespace WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IService<UserDto> iservice;
+        private readonly IServiceUser<UserDto> iservice;
 
-        public UserController(IService<UserDto> iservice)
+        public UserController(IServiceUser<UserDto> iservice)
         {
             this.iservice = iservice;
         }
@@ -178,7 +178,7 @@ namespace WebApi.Controllers
         [Authorize]
         [HttpPut("{id}")]
         [Consumes("multipart/form-data")]
-        public async Task<ActionResult<UserDto>> Put(int id, [FromForm] UserDto value)
+        public async Task<ActionResult<UserDto>> Put(int id, [FromForm] UserUpdateDto value)
         {
             try
             {

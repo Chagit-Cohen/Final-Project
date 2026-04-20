@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
@@ -80,10 +81,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // הזרקת תלויות
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
-builder.Services.AddScoped<IService<UserDto>, UserService>();
+builder.Services.AddScoped<IServiceUser<UserDto>, UserService>();
 
 builder.Services.AddScoped<IRepository<ExpertProfile>, ExpertProfileRepository>();
-builder.Services.AddScoped<IService<ExpertProfileDto>, ExpertProfileService>();
+builder.Services.AddScoped<IServiceUser<UserDto>, UserService>();
+builder.Services.AddScoped<IServiceExpert<ExpertProfileDto>, ExpertProfileService>();
 
 builder.Services.AddScoped<ILogin, UserLoginService>();
 

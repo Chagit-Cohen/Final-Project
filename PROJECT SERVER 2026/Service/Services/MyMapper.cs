@@ -29,6 +29,8 @@ namespace Service.Services
             CreateMap<UserDto, User>()
                 .ForMember("ProfileUrl",
                     x => x.MapFrom(y => y.ProfileImage != null ? y.ProfileImage.FileName : null));
+
+
         }
     }
 }

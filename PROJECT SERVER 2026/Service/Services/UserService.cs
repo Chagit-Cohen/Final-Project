@@ -128,7 +128,7 @@ using AutoMapper;
 
 namespace Service.Services
 {
-    public class UserService : IService<UserDto>
+    public class UserService : IServiceUser<UserDto>
     {
         private readonly IRepository<User> repository;
         private readonly IMapper mapper;
@@ -208,7 +208,7 @@ namespace Service.Services
             return mapper.Map<User, UserDto>(u);
         }
 
-        public async Task UpdateItem(int id, UserDto item)
+        public async Task UpdateItem(int id, UserUpdateDto item)
         {
             
             User user = await repository.GetById(id);

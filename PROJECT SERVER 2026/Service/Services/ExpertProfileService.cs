@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Service.Services
 {
-    public class ExpertProfileService : IService<ExpertProfileDto>
+    public class ExpertProfileService : IServiceExpert<ExpertProfileDto>
     {
         private readonly IRepository<ExpertProfile> expertRepository;
         private readonly IRepository<User> userRepository;
