@@ -31,7 +31,7 @@ namespace Repository.Repositories
             return await context.expertProfiles
                 .Include(ep => ep.User)
                  .Where(x => x.User.IsActive && x.User.IsExpert)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.UserId == id);
         }
 
         public async Task<ExpertProfile> AddItem(ExpertProfile item)

@@ -1,0 +1,151 @@
+.profile-page {
+  min-height: 100vh;
+  padding: 46px 18px 72px;
+  direction: rtl;
+  color: #f4fff8;
+  background:
+    radial-gradient(circle at 85% 12%, rgba(57, 255, 136, 0.15), transparent 28%),
+    radial-gradient(circle at 12% 82%, rgba(0, 200, 107, 0.11), transparent 30%),
+    linear-gradient(180deg, #020403 0%, #07100d 55%, #020403 100%);
+}
+
+.profile-page h2 {
+  max-width: 900px;
+  margin: 0 auto 24px;
+  color: #f4fff8;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 0 30px rgba(57, 255, 136, 0.24);
+}
+
+.profile-page > form,
+.profile-page > div {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto 22px;
+  padding: 28px 26px;
+  border: 1px solid rgba(57, 255, 136, 0.16);
+  border-radius: 18px;
+  color: #f4fff8;
+  background:
+    linear-gradient(145deg, rgba(12, 22, 18, 0.96), rgba(2, 4, 3, 0.96));
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.48),
+    0 0 42px rgba(57, 255, 136, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.profile-page form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 17px;
+}
+
+.profile-page label {
+  color: #a7b8ad;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.profile-page input,
+.profile-page textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 15px;
+  border: 1px solid rgba(167, 184, 173, 0.2);
+  border-radius: 12px;
+  color: #f4fff8;
+  background: linear-gradient(180deg, rgba(12, 22, 18, 0.9), rgba(4, 8, 7, 0.96));
+  outline: none;
+  font: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.profile-page textarea {
+  min-height: 132px;
+  padding: 14px 15px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.profile-page input:focus,
+.profile-page textarea:focus {
+  border-color: rgba(57, 255, 136, 0.62);
+  background: rgba(4, 10, 8, 0.98);
+  box-shadow:
+    0 0 0 4px rgba(57, 255, 136, 0.13),
+    0 0 22px rgba(57, 255, 136, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.profile-page input[type="file"] {
+  min-height: auto;
+  padding: 13px 14px;
+  color: #a7b8ad;
+  border-style: dashed;
+  border-color: rgba(57, 255, 136, 0.28);
+  cursor: pointer;
+}
+
+.profile-page input[type="file"]::file-selector-button {
+  margin-left: 12px;
+  padding: 9px 13px;
+  border: 0;
+  border-radius: 10px;
+  color: #021008;
+  background: linear-gradient(135deg, #39ff88, #00c86b);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.profile-page button {
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid rgba(170, 255, 208, 0.35);
+  border-radius: 12px;
+  color: #021008;
+  background: linear-gradient(135deg, #39ff88 0%, #00c86b 100%);
+  font: inherit;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(0, 200, 107, 0.24), 0 0 22px rgba(57, 255, 136, 0.22);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.profile-page button:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.12);
+  box-shadow: 0 20px 44px rgba(0, 200, 107, 0.34), 0 0 30px rgba(57, 255, 136, 0.32);
+}
+
+.profile-page > div form {
+  margin-top: 20px;
+}
+
+.profile-page > p {
+  max-width: 560px;
+  margin: 16px auto 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(57, 255, 136, 0.2);
+  border-radius: 12px;
+  color: #39ff88;
+  text-align: center;
+  font-weight: 850;
+  background: rgba(57, 255, 136, 0.08);
+}
+
+@media (max-width: 640px) {
+  .profile-page {
+    padding: 32px 14px 54px;
+  }
+
+  .profile-page > form,
+  .profile-page > div {
+    padding: 24px 18px;
+  }
+}

@@ -1,12 +1,31 @@
 @import "./Login.css";
 
 .register-page .auth-card {
-  max-width: 500px;
+  max-width: 520px;
+}
+
+.register-page .auth-form {
+  gap: 16px;
 }
 
 .register-page input[type="file"] {
-  padding: 10px;
-  border: 1px dashed #1e293b;
-  background: #020617;
-  color: #94a3b8;
+  min-height: auto;
+  padding: 13px 14px;
+  color: var(--text-muted);
+  border-style: dashed;
+  border-color: rgba(57, 255, 136, 0.28);
+  background:
+    linear-gradient(180deg, rgba(14, 28, 22, 0.82), rgba(4, 8, 7, 0.96));
+  cursor: pointer;
+}
+
+.register-page input[type="file"]::file-selector-button {
+  margin-left: 12px;
+  padding: 9px 13px;
+  border: 0;
+  border-radius: 10px;
+  color: #021008;
+  background: linear-gradient(135deg, var(--green), var(--green-deep));
+  font-weight: 900;
+  cursor: pointer;
 }

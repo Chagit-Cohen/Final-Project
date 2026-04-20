@@ -2,7 +2,6 @@ import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { useAuthContext } from "../Authoration/useAuthContext";
 import { updateProfile } from "../Service/userService";
 import { updateExpertProfile,getExpertsById } from "../Service/expertService";
-import type{Expert} from "../Types/expert"
 
 export default function Profile() {
   const { user, setUser } = useAuthContext();
@@ -40,10 +39,13 @@ export default function Profile() {
     try {
       const  ex = await getExpertsById(user.id);
 
+      
+
+
       setExpertFormData({
         category: ex.category || "",
         bio: ex.bio || "",
-        basePrice: ex.basePrice?.toString() || ""
+        basePrice: ex.basePrice || ""
       });
     } catch (err) {
       console.log(err);
