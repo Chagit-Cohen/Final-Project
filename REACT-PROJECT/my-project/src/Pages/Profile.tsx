@@ -6,9 +6,7 @@ import type{Expert} from "../Types/expert"
 
 export default function Profile() {
   const { user, setUser } = useAuthContext();
-  Expert ex=await getExpertsById(user?.id)
   const [showExpertDetails, setShowExpertDetails] = useState(false);
-
   const [userFormData, setUserFormData] = useState({
     fullName: "",
     city: "",
@@ -16,9 +14,9 @@ export default function Profile() {
   });
 
   const [expertFormData, setExpertFormData] = useState({
-    category: ex.Category ||"",
-    bio:ex.bio|| "",
-    basePrice: ex.basePrice||""
+    category:"",
+    bio: "",
+    basePrice:""
   });
 
   const [message, setMessage] = useState("");
@@ -33,6 +31,32 @@ export default function Profile() {
       });
     }
   }, [user]);
+
+
+  useEffect(() => {
+  async function loadExpert() {
+    if (!user?.id || !user?.isExpert) return;
+
+    try {
+      const  ex = await getExpertsById(user.id);
+
+      setExpertFormData({
+        category: ex.category || "",
+        bio: ex.bio || "",
+        basePrice: ex.basePrice?.toString() || ""
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  loadExpert();
+}, [user]);
+
+
+
+
+
 
   function handleUserChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value, files } = event.target;
@@ -87,17 +111,18 @@ export default function Profile() {
     event.preventDefault();
     setError("");
     setMessage("");
-
+    if(!user)return;
     try {
       const data = new FormData();
       data.append("Category", expertFormData.category);
       data.append("Bio", expertFormData.bio);
       data.append("BasePrice", expertFormData.basePrice);
-       data.append("City", ex.basePrice);
-      data.append("Fullname", ex.basePrice);
+
+       data.append("City", user.city);
+      data.append("FullName", user.fullName);
 
 
-      await updateExpertProfile(user?.id, data);
+      await updateExpertProfile(user.id, data);
       setMessage("פרטי המומחה עודכנו בהצלחה");
     } catch (err: any) {
       setError(err.response?.data?.message || "עדכון נכשל");

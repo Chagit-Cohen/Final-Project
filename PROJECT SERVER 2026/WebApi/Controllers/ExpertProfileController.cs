@@ -38,13 +38,14 @@ namespace WebApi.Controllers
         }
 
         // PUT api/<UserController>/5
+      
         [Authorize]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ExpertProfileDto value)
+        [Consumes("multipart/form-data")]
+        public async Task Put(int id, [FromForm] ExpertProfileDto value)
         {
-            iservice.UpdateItem(id, value);
+            await iservice.UpdateItem(id, value);
         }
-
         // DELETE api/<UserController>/5
         [Authorize]
         [HttpDelete("{id}")]
