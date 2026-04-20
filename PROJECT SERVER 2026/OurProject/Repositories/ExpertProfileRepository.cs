@@ -43,7 +43,8 @@ namespace Repository.Repositories
 
         public async Task UpdateItem(int id, ExpertProfile item)
         {
-            ExpertProfile ep = await context.expertProfiles.FindAsync(id);
+            ExpertProfile ep = await context.expertProfiles
+                    .FirstOrDefaultAsync(x => x.UserId == id);
             if (ep != null)
             {
                 // עדכון השדות המקצועיים בלבד

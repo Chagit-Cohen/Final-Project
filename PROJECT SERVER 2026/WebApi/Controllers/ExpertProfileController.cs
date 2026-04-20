@@ -49,9 +49,9 @@ namespace WebApi.Controllers
         // DELETE api/<UserController>/5
         [Authorize]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            iservice.DeleteItem(id);
+            await iservice.DeleteItem(id);
         }
     }
 }

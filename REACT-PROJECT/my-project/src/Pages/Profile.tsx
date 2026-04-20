@@ -1,7 +1,7 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { useAuthContext } from "../Authoration/useAuthContext";
 import { updateProfile } from "../Service/userService";
-import { updateExpertProfile,getExpertsById } from "../Service/expertService";
+import { updateExpertProfile,getExpertsById,deleteExpertById } from "../Service/expertService";
 
 export default function Profile() {
   const { user, setUser } = useAuthContext();
@@ -47,6 +47,7 @@ export default function Profile() {
         bio: ex.bio || "",
         basePrice: ex.basePrice || ""
       });
+      
     } catch (err) {
       console.log(err);
     }
@@ -131,6 +132,32 @@ export default function Profile() {
     }
   }
 
+
+
+
+   async function handleDeleteExpert() {
+    setError("");
+    setMessage("");
+    if (!user) return;
+
+    try {
+      await deleteExpertById(user.id);
+
+      setUser({
+        ...user,
+        isExpert: false
+      });
+
+      setShowExpertDetails(false);
+      setMessage("המומחה נמחק בהצלחה");
+    } catch (err: any) {
+      setError(err.response?.data?.message || "מחיקת מומחה נכשלה");
+    }
+  }
+
+
+
+
   return (
     <div>
       <h2>הפרופיל שלי</h2>
@@ -209,6 +236,7 @@ export default function Profile() {
               </div>
 
               <button type="submit">שמור פרטי מומחה</button>
+              <button type="button" onClick={handleDeleteExpert}>הפוך פרופיל מומחה ל- לא פעיל</button>
             </form>
           )}
         </div>

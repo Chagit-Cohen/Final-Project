@@ -48,7 +48,7 @@ namespace Service.Services
             {
                 ep.User.IsExpert = false;
 
-                await userRepository.UpdateItem(ep.User.Id, ep.User);
+                await userRepository.UpdateItem(ep.UserId, ep.User);
 
             }
 
