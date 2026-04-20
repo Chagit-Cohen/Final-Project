@@ -3,9 +3,11 @@ import { login } from "../Service/auth.service";
 import { setSession } from "../Authoration/Seesion";
 import { useAuthContext } from "../Authoration/useAuthContext";
 import "../Style/Login.css";  // [נוסף]
+import { useNavigate } from "react-router"
 
 
 export default function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const isFormValid =
@@ -28,8 +30,6 @@ export default function Login() {
     event.preventDefault();
     setError("");
     setMessage("");
-
-
     try {
       const { user, token } = await login(formData.email, formData.password);
 
@@ -45,6 +45,7 @@ export default function Login() {
     catch (err: any) {
       setError(err.response?.data?.message || "אירעה שגיאה")
     }
+    navigate("/");
   }
 
   return (

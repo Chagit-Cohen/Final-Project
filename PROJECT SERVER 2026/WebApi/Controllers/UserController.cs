@@ -177,12 +177,14 @@ namespace WebApi.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UserDto value)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<UserDto>> Put(int id, [FromForm] UserDto value)
         {
             try
             {
                 await iservice.UpdateItem(id, value);
-                return Ok(new { message = "המשתמש עודכן בהצלחה" });
+                var updatedUser = await iservice.GetById(id);
+                return Ok(updatedUser);
             }
             catch (Exception ex)
             {

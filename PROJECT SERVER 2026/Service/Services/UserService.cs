@@ -145,9 +145,6 @@ namespace Service.Services
             if (item.Password.Length < 6)
                 throw new Exception("הסיסמה חייבת להכיל לפחות 6 תווים");
 
-            //if (!item.Email.Contains("@"))
-            //    throw new Exception("פורמט האימייל אינו תקין");
-
             List<User> users = await repository.GetAll();
 
             if (users.Any(x => x.Email == item.Email))

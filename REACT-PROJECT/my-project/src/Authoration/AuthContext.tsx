@@ -45,33 +45,10 @@ export const AuthProvider = ({ children }: Props) => {
             }
 
             setAuthState({ user: null, isInitialized: true });
-
-
-
-
-
-
-            // try {
-            //     if (token) {
-            //          setSession(token)
-            //         const user = await getUserByToken()
-            //         setUser(user)
-            //     }
-            // } catch (error) {
-            //     console.error(error);
-            // } finally {
-
-            //     setAuthState((prev) => ({ ...prev, isInitialized: true }))
-            // }
         }
 
         initialize();
     }, [])
-
-
-
-
-
     return <AuthContext.Provider value={{ ...authState, setUser, isAuthorized: !!authState.user }}>
         {children}
     </AuthContext.Provider>

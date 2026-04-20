@@ -31,7 +31,6 @@ const Home = () => {
         setLoading(false)
       }
     }
-
     fetchExperts()
   }, [])
 
@@ -52,10 +51,10 @@ const Home = () => {
     expert.fullName.includes(search);
 
   const matchCity =
-    !Data.city || expert.city?.includes(Data.city);
+    !Data.city || expert.city.includes(Data.city);
 
   const matchCategory =
-    !Data.category || expert.category?.toString() === Data.category;
+    !Data.category || expert.category.toString() === Data.category;
 
   const matchPrice =
     !Data.basePrice || expert.basePrice <= Number(Data.basePrice);

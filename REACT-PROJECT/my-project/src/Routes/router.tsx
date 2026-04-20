@@ -9,6 +9,7 @@ import Register from "../Pages/Register"
 import AuthGuard from "../Authoration/AuthGuard"
 import GuestGuard from "../Authoration/GuestGuard"
 import RegisterExpert from "../Pages/ExpertRegister"
+import Profile from "../Pages/Profile"
 
 const Router = () => {
 
@@ -26,7 +27,7 @@ const Router = () => {
         },
 
         {
-          path: "expert/:id",
+          path: "/expert/:id",
           element: <Expert />
         },
         {
@@ -59,6 +60,16 @@ const Router = () => {
       )
     },
 
+    {
+        path:"/Profile",
+        element:(
+          <AuthGuard> 
+            <Profile/>
+          </AuthGuard>
+         
+        )
+    }
+    ,
     {
       path: "*",
       element: <Navigate to="/" />

@@ -49,11 +49,11 @@ namespace Repository.Repositories
             if (u != null)
             {
                 u.FullName = item.FullName;
-                u.Email = item.Email;
+                //u.Email = item.Email;
                 u.City = item.City;
-                u.IsExpert = item.IsExpert;
+                //u.IsExpert = item.IsExpert;
                 u.ProfileUrl = item.ProfileUrl;
-                u.PasswordHash = item.PasswordHash;
+                //u.PasswordHash = item.PasswordHash;
                 context.save();
             }
 
