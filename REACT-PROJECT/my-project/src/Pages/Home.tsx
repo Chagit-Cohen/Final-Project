@@ -126,7 +126,7 @@ const Home = () => {
 
       <div className="experts-grid"> 
         {!loading && !error && filteredExperts.map((expert: any) => (
-          <Link key={expert.id} to={`/expert/${expert.id}`} className="expert-link"> 
+          <Link key={expert.id} to={`/expert/${expert.userId}`} className="expert-link"> 
             <div className="expert-card"> 
               <div className="expert-avatar"> 
                 {expert.fullName.charAt(0)}

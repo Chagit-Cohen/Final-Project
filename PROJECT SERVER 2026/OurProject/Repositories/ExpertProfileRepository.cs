@@ -47,11 +47,13 @@ namespace Repository.Repositories
                     .FirstOrDefaultAsync(x => x.UserId == id);
             if (ep != null)
             {
-                // עדכון השדות המקצועיים בלבד
+                // עדכון השדות המקצועיים 
                 ep.Category = item.Category;
                 ep.Bio = item.Bio;
                 ep.BasePrice = item.BasePrice;
-
+                //דירוג
+                ep.NumberOfRaiting = item.NumberOfRaiting;
+                ep.AverageRating = item.AverageRating;
                  context.save();
             }
         }

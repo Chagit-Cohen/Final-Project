@@ -2,6 +2,7 @@ import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { useAuthContext } from "../Authoration/useAuthContext";
 import { updateProfile } from "../Service/userService";
 import { updateExpertProfile, getExpertsById, deleteExpertById, returnExpertById,getExpertByIdJustToTheUser } from "../Service/expertService";
+import "../Style/Profile.css";
 
 export default function Profile() {
   const [hasExpertProfile, setHasExpertProfile] = useState(false);
@@ -192,7 +193,7 @@ export default function Profile() {
 
 
   return (
-    <div>
+    <div className="profile-page">
       <h2>הפרופיל שלי</h2>
 
       <form onSubmit={handleSubmitUser}>
