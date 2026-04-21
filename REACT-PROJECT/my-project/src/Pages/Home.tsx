@@ -11,7 +11,7 @@ const Home = () => {
   const navigate = useNavigate();
     const [Data, setData] = useState({
     city: "",
-    basePrice: "",
+    basePrice: "", 
     category: ""
   });
   const [search, setSearch] = useState("")

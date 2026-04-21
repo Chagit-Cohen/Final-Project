@@ -1,0 +1,79 @@
+/* Expert.css - עיצוב מקצועי לעמוד מומחה
+
+.expert-container {
+  max-width: 500px;
+  margin: 60px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 40px 32px;
+  text-align: center;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+.expert-title {
+  font-size: 2.2rem;
+  color: #2a3b4c;
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.expert-details {
+  font-size: 1.15rem;
+  color: #4a5a6a;
+  margin-bottom: 10px;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .expert-container {
+    padding: 24px 8px;
+  }
+  .expert-title {
+    font-size: 1.4rem;
+  }
+} */
+.expert-container {
+  max-width: 520px;
+  margin: 64px auto;
+  background: linear-gradient(135deg, #f8fff8 80%, #e6f9f0 100%);
+  border-radius: 22px;
+  box-shadow: 0 6px 32px rgba(44, 62, 80, 0.13), 0 1.5px 0 #39ff88 inset;
+  padding: 48px 36px 40px;
+  text-align: center;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  transition: box-shadow 0.2s;
+}
+
+.expert-container:hover {
+  box-shadow: 0 12px 48px rgba(44, 62, 80, 0.18), 0 2px 0 #00c86b inset;
+}
+
+.expert-title {
+  font-size: 2.4rem;
+  color: #1a2b3c;
+  margin-bottom: 22px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 18px #b6e7c7;
+}
+
+.expert-details {
+  font-size: 1.18rem;
+  color: #3a5a6a;
+  margin-bottom: 16px;
+  line-height: 1.8;
+  background: rgba(57,255,136,0.06);
+  border-radius: 10px;
+  padding: 12px 0;
+}
+
+@media (max-width: 600px) {
+  .expert-container {
+    padding: 22px 4px 18px;
+  }
+  .expert-title {
+    font-size: 1.35rem;
+  }
+}
