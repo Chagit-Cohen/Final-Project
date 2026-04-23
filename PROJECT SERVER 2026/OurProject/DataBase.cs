@@ -47,6 +47,17 @@ namespace Repository
             modelBuilder.Entity<User>()
                .HasIndex(u => u.Email)
                .IsUnique();
+
+            modelBuilder.Entity<ExpertProfile>()
+           .HasAlternateKey(e => e.UserId);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.ExpertProfile)
+                .WithMany(e => e.Reviews)
+                .HasForeignKey(r => r.ExpertProfileId)
+                .HasPrincipalKey(e => e.UserId);   
+
+
         }
     }
 }
