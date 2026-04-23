@@ -22,6 +22,8 @@ const Layout = () => {
                 alt="Profile"
                 style={{ width: "40px", height: "40px", borderRadius: "50%", marginLeft: "15px" }}
               />
+              <span>לפרטי החשבון שלי</span>
+
             </NavLink>
           ) : null}
 

@@ -25,5 +25,8 @@ namespace Service.Dto
         public int NumberOfRaiting { get; set; }
 
         public string City {  get; set; }//מגיע מיוזר
+
+        public string ProfileUrl { get; set; }//מגיע מיוזר
+
     }
 }

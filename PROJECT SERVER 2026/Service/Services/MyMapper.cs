@@ -19,7 +19,9 @@ namespace Service.Services
               .ForMember(dest => dest.FullName,
               opt => opt.MapFrom(src => src.User.FullName))
            .ForMember(dest => dest.City,
-            opt => opt.MapFrom(src => src.User.City));
+            opt => opt.MapFrom(src => src.User.City))
+           .ForMember(dest => dest.ProfileUrl,
+            opt => opt.MapFrom(src => src.User.ProfileUrl));
             CreateMap<ExpertProfileDto, ExpertProfile>();
 
             

@@ -71,11 +71,12 @@ export default function ExpertPage() {
           <div className="reviews-track">
             {reviews?.map((review, index) => (
               <div className="review-card" key={index}>
-                <p className="review-text">"{review.comment}"</p>
-                <p className="review-name">- {review.clientName}</p>
-                <p className="review-stars">
+                  <p className="review-stars">
                   {renderStars(review.rating || 0)}
                 </p>
+                <p className="review-text">"{review.comment}"</p>
+                <p className="review-name"> {review.clientName}</p>
+              
               </div>
             ))}
 

@@ -8,4 +8,5 @@ export  type Expert = {
     averageRating :number
   numberOfRaiting :number
   city:string
+  profileUrl: string | null;
 };
