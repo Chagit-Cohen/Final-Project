@@ -46,6 +46,7 @@ export default function RegisterExpert() {
       data.append("FullName", user?.fullName ?? "");
       data.append("City", user?.city ?? "");
       data.append("UserId", (user?.id ?? 0).toString());
+      data.append("profileUrl", user?.profileUrl ?? "");
 
       // כאן תחליפי לפונקציית השירות שלך
       await register(data);
