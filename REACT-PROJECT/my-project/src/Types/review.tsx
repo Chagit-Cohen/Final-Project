@@ -1,6 +1,7 @@
 export type Review = {
-  ExpertProfileId: number;             
-  Rating : number;
-  Comment: string;
-  ClientId: string;
+  expertProfileId: number;             
+  rating : number;
+  comment: string;
+  clientId: string;
+  clientName: string; 
 };

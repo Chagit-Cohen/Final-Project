@@ -24,7 +24,9 @@ namespace Service.Services
 
             
 
-            CreateMap<Review, ReviewDto>();
+            CreateMap<Review, ReviewDto>()
+                 .ForMember(dest => dest.ClientName,
+            opt => opt.MapFrom(src => src.Client.FullName));
             CreateMap<ReviewDto, Review>();
 
 
