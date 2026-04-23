@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getExpertsById } from "../Service/expertService";
+import {getReviewsByExpertId} from "../Service/reviewService";
 import type { Expert } from "../Types/expert";
+import type { Review } from "../Types/review";
 import "../Style/Expert.css";
 
 export default function ExpertPage() {
   const { id } = useParams();
   const [expert, setExpert] = useState<Expert | null>(null);
+  const [reviews, setReviews] = useState<Review[] | []>([]);
+
+
 
   useEffect(() => {
     async function loadExpert() {
@@ -14,6 +19,9 @@ export default function ExpertPage() {
 
       const data = await getExpertsById(Number(id));
       setExpert(data);
+
+        const reviewsData = await getReviewsByExpertId(Number(id));
+         setReviews(reviewsData || []);
     }
 
     loadExpert();
@@ -40,29 +48,47 @@ export default function ExpertPage() {
     return stars;
   }
 
-  if (!expert) return <p>טוען...</p>;
-return (
-  <div className="expert-page">
+       if (!expert) return <p>טוען...</p>;
+     return (
+       <div className="expert-page">
+     
+      
+         <div className="expert-card-full">
+     
+           <h1>{expert.fullName}</h1>
+     
+           <p><strong>עיר:</strong> {expert.city}</p>
+     
+           <p><strong>מחיר:</strong> ₪{expert.basePrice}</p>
+     
+           <p><strong>תיאור:</strong> {expert.bio}</p>
+     
+           <p>
+             <strong>דירוג:</strong>{" "}
+             {renderStars(expert.averageRating || 0)}
+           </p>
+     
+         </div>
 
-    {/* 🔴 דיב חדש מתחיל */}
-    <div className="expert-card-full">
+       <div className="reviews-section">
+       <h2>ביקורות</h2>
+     
+       <div className="reviews-marquee">
+         <div className="reviews-track">
+           {reviews?.map((review, index) => (
+             <div className="review-card" key={index}>
+               <p className="review-text">"{review.Comment}"</p>
+               <p className="review-name">- {review.ClientId}</p>
+               <p className="review-stars">
+                 {renderStars(review.Rating || 0)}
+               </p>
+             </div>
+           ))}
 
-      <h1>{expert.fullName}</h1>
-
-      <p><strong>עיר:</strong> {expert.city}</p>
-
-      <p><strong>מחיר:</strong> ₪{expert.basePrice}</p>
-
-      <p><strong>תיאור:</strong> {expert.bio}</p>
-
-      <p>
-        <strong>דירוג:</strong>{" "}
-        {renderStars(expert.averageRating || 0)}
-      </p>
-
-    </div>
-    {/* 🔴 כאן סוגרים אותו */}
+         </div>
+       </div>
+     </div>
 
   </div>
-);
+  );
 }

@@ -1,9 +1,11 @@
 .expert-page {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 40px 20px;
   background: #000;
   min-height: 100vh;
+  gap: 30px;
 }
 
 .expert-card-full {
@@ -14,7 +16,6 @@
   padding: 30px;
   text-align: center;
   color: white;
-
   border: 1px solid rgba(0, 255, 150, 0.2);
   box-shadow: 0 0 25px rgba(0, 255, 150, 0.15);
 }
@@ -38,4 +39,70 @@
   font-size: 26px;
   color: #00ff99;
   margin-top: 15px;
+}
+
+.reviews-section {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.reviews-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00ff99;
+}
+
+.reviews-marquee {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.reviews-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: scrollReviews 20s linear infinite;
+}
+
+.review-card {
+  min-width: 280px;
+  max-width: 280px;
+  background: #111;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 14px rgba(0, 255, 150, 0.12);
+  border: 1px solid rgba(0, 255, 150, 0.15);
+  flex-shrink: 0;
+  text-align: center;
+  color: white;
+}
+
+.review-text {
+  font-size: 16px;
+  color: #ddd;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.review-name {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #00ff99;
+}
+
+.review-stars {
+  font-size: 20px;
+  color: #00ff99;
+}
+
+@keyframes scrollReviews {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
