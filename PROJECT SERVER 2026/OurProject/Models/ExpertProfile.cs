@@ -21,6 +21,7 @@ namespace Repository.Models
         public double AverageRating { get; set; }//דירוג ממוצע מחושב מביקורות
 
         public int NumberOfRaiting {  get; set; }
+        public List<Review> Reviews { get; set; }
 
     }
 }

@@ -20,12 +20,16 @@ namespace Service.Services
               opt => opt.MapFrom(src => src.User.FullName))
            .ForMember(dest => dest.City,
             opt => opt.MapFrom(src => src.User.City));
-
             CreateMap<ExpertProfileDto, ExpertProfile>();
 
+            
+
+            CreateMap<Review, ReviewDto>();
+            CreateMap<ReviewDto, Review>();
+
+
+
             CreateMap<User, UserDto>();
-
-
             CreateMap<UserDto, User>()
                 .ForMember("ProfileUrl",
                     x => x.MapFrom(y => y.ProfileImage != null ? y.ProfileImage.FileName : null));

@@ -84,19 +84,16 @@ builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IServiceUser<UserDto>, UserService>();
 
 builder.Services.AddScoped<IRepositoryExpert<ExpertProfile>, ExpertProfileRepository>();
-
-builder.Services.AddScoped<IServiceUser<UserDto>, UserService>();
 builder.Services.AddScoped<IServiceExpert<ExpertProfileDto>, ExpertProfileService>();
 
-builder.Services.AddScoped<ILogin, UserLoginService>();
-
-
-
+builder.Services.AddScoped<IRepositoryReview<Review>, ReviewRepository>();
+builder.Services.AddScoped<IServiceReview<ReviewDto>, ReviewService>();
 
 builder.Services.AddAutoMapper(typeof(MyMapper));
+
 builder.Services.AddScoped<IContext, DataBase>();
 
-
+builder.Services.AddScoped<ILogin, UserLoginService>();
 //1 addsingelton -מופע יחיד
 //2 addScoped  -עבור כל גולש 
 //3 addTrensisnet -לכל בקשה

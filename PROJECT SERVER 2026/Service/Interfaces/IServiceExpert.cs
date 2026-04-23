@@ -20,6 +20,9 @@ namespace Service.Interfaces
             Task DeleteItem(int id);
             Task RestoreItem(int id);
         Task<T> GetByIdJustToTheUser(int id);
+
+        Task AddReviewRating(int idExpert, int rating); 
+
     }
-    
+
 }

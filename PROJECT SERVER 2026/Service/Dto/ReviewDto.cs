@@ -8,5 +8,9 @@ namespace Service.Dto
 {
     public class ReviewDto
     {
+        public int ExpertProfileId { get; set; }
+        public int ClientId { get; set; }
+        public int Rating { get; set; }
+        public string Comment { get; set; }
     }
 }
