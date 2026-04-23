@@ -185,11 +185,10 @@ const Home = () => {
                     alt="Expert"
                     style={{ width: "80px", height: "80px", borderRadius: "50%" }}
                   />
-                </div>
+                </div>    
 
-                <h3>{expert.fullName}</h3>
+                <h3>{expert.fullName}</h3> 
 
-                {/* 🔴 חדש: כמו אצלה */}
                 <p>{expert.category}</p>
                 <p>{expert.city}</p>
                 <p>{expert.basePrice} ₪</p>
