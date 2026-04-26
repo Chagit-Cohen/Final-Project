@@ -13,12 +13,12 @@ const Home = () => {
 
   const [Data, setData] = useState({
     city: "",
-    basePrice: "1000", // 🔴 שינוי: במקום ריק, ברירת מחדל נוחה
+    basePrice: "1000", 
     category: ""
   });
 
   const [search, setSearch] = useState("");
-  const [expertsData, setExpertsData] = useState<Expert[]>([]); // 🔴 שינוי: טיפוס מסודר
+  const [expertsData, setExpertsData] = useState<Expert[]>([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -48,15 +48,15 @@ const Home = () => {
   const filteredExperts = expertsData.filter((expert: Expert) => {
     const matchSearch =
       !search ||
-      expert.fullName.toLowerCase().trim().includes(search.toLowerCase().trim()); // 🔴 שינוי
+      expert.fullName.toLowerCase().trim().includes(search.toLowerCase().trim());
 
     const matchCity =
       !Data.city ||
-      expert.city.toLowerCase().trim().includes(Data.city.toLowerCase().trim()); // 🔴 שינוי
+      expert.city.toLowerCase().trim().includes(Data.city.toLowerCase().trim()); 
 
     const matchCategory =
       !Data.category ||
-      expert.category.toLowerCase().trim() === Data.category.toLowerCase().trim(); // 🔴 שינוי
+      expert.category.toLowerCase().trim() === Data.category.toLowerCase().trim(); 
 
     const matchPrice =
       !Data.basePrice || expert.basePrice <= Number(Data.basePrice);
@@ -74,7 +74,7 @@ const Home = () => {
         <h1>מאגר המומחים</h1>
         <p>חפשי את המומחה שמתאים לך בצורה נוחה ומהירה</p>
 
-        {/* 🔴 חדש: כל אזור הסינונים בשורה */}
+      
         <div className="filters-row">
           <input
             className="search-input"
@@ -84,7 +84,7 @@ const Home = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          {/* 🔴 חדש: עטיפת פילטר */}
+      
           <div className="form-group filter-box">
             <label>קטגוריה:</label>
             <select
@@ -94,7 +94,7 @@ const Home = () => {
             >
               <option value="">בחרי מקצוע</option>
 
-              {/* 🔴 חדש: קבוצות מסודרות */}
+             
               <optgroup label="עבודות לבית">
                 <option value="אינסטלציה">אינסטלציה</option>
                 <option value="חשמל">חשמל</option>
@@ -133,7 +133,7 @@ const Home = () => {
             </select>
           </div>
 
-          {/* 🔴 חדש: עטיפת פילטר */}
+
           <div className="form-group filter-box">
             <label>עיר:</label>
             <input
@@ -145,11 +145,11 @@ const Home = () => {
             />
           </div>
 
-          {/* 🔴 חדש: עיצוב טוב יותר למחיר */}
+        
           <div className="form-group filter-box price-filter">
             <label>
               מחיר מקסימלי:
-              <span>{Data.basePrice} ₪</span>
+             <span>{Data.basePrice} ₪</span>
             </label>
             <input
               className="price-range"
@@ -172,7 +172,7 @@ const Home = () => {
         {!loading &&
           !error &&
           filteredExperts.map((expert: Expert) => (
-            // 🔴 חשוב: משאיר את הלוגיקה שלך עם userId
+           
             <Link
               key={expert.id}
               to={`/expert/${expert.userId}`}
@@ -189,9 +189,10 @@ const Home = () => {
 
                 <h3>{expert.fullName}</h3> 
 
+                
                 <p>{expert.category}</p>
                 <p>{expert.city}</p>
-                <p>{expert.basePrice} ₪</p>
+                <p>החל מ {expert.basePrice} ₪</p>
 
                 <span className="expert-more">לצפייה בפרטים</span>
               </div>

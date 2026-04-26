@@ -17,13 +17,14 @@ export const getExperts = async () => {
     return experts
 }
 
-export const updateExpertProfile = async (id:number|undefined,data: FormData) => {
+export const updateExpertProfile = async (id: number | undefined, data: FormData) => {
+  const token = localStorage.getItem("token");
   const response = await axios.put(`/api/ExpertProfile/${id}`, data, {
     headers: {
-      "Content-Type": "multipart/form-data"
+      "Content-Type": "multipart/form-data",
+      "Authorization": `Bearer ${token}`
     }
   });
-
   return response.data;
 };
 export const getExpertsById = async (id:number|undefined) => {
