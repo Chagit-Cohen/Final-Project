@@ -44,7 +44,7 @@
 }
 
 .profile-page button {
-  background: #00ff99;
+  background: #16885a;
   color: black;
   border: none;
   padding: 10px 16px;
@@ -57,17 +57,17 @@
 }
 
 .profile-page button:hover {
-  background: #00e68a;
+  background: #0b8453;
 }
 
 .profile-page button[type="button"] {
   background: transparent;
-  border: 1px solid #00ff99;
-  color: #00ff99;
+  border: 1px solid #086942;
+  color: #0e7a4f;
 }
 
 .profile-page button[type="button"]:hover {
-  background: #00ff99;
+  background: #0d8153;
   color: black;
 }
 
@@ -81,5 +81,5 @@
 }
 
 .profile-page .message {
-  color: #00ff99;
+  color: #0e9760;
 }

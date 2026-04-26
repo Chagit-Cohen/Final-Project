@@ -40,7 +40,7 @@ nav a {
 
 nav a:hover,
 nav a.active {
-  color: #39ff88;
+  color: #097d37;
   background: rgba(57, 255, 136, 0.08);
   border-color: rgba(57, 255, 136, 0.24);
   box-shadow: 0 0 18px rgba(57, 255, 136, 0.14);
@@ -48,7 +48,7 @@ nav a.active {
 
 nav img {
   display: block;
-  border: 2px solid rgba(57, 255, 136, 0.72);
+  border: 2px solid rgba(7, 105, 46, 0.72);
   box-shadow: 0 0 22px rgba(57, 255, 136, 0.28);
 }
 
@@ -59,7 +59,7 @@ nav button {
   border: 1px solid rgba(57, 255, 136, 0.35);
   border-radius: 12px;
   color: #021008;
-  background: linear-gradient(135deg, #39ff88 0%, #00c86b 100%);
+  background: linear-gradient(135deg, #39ff88 0%, #08663a 100%);
   font-weight: 900;
   cursor: pointer;
   box-shadow: 0 12px 26px rgba(0, 200, 107, 0.22);
