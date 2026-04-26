@@ -44,6 +44,13 @@ namespace Repository
                 .HasForeignKey(s => s.ClientId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<ServiceCall>()
+               .HasOne(s => s.Expert)
+               .WithMany()
+               .HasForeignKey(s => s.ExpertId)
+               .HasPrincipalKey(e => e.UserId)
+               .OnDelete(DeleteBehavior.NoAction);
+           
             modelBuilder.Entity<User>()
                .HasIndex(u => u.Email)
                .IsUnique();

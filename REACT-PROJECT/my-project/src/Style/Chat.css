@@ -1,0 +1,244 @@
+.chat-page {
+  direction: rtl;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  padding: 35px;
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 850px;
+  height: 75vh;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* HEADER */
+.chat-header {
+  padding: 18px 24px;
+  background: #f4f6f8;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-header h2 {
+  margin: 0;
+  color: #111;
+}
+
+.chat-header p {
+  margin: 6px 0 0;
+  color: #666;
+}
+
+/* MESSAGES */
+.chat-messages {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background: #f8fafc;
+}
+
+/* כל הודעה */
+.chat-message {
+  max-width: 65%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  margin-bottom: 14px;
+}
+
+/* צד ימין / שמאל */
+.my-message {
+  margin-right: auto;
+}
+
+.other-message {
+  margin-left: auto;
+}
+
+/* מומחה */
+.expert-message {
+  background: #dff5e8;
+  color: #0f6b35;
+}
+
+/* לקוח */
+.client-message {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #ddd;
+}
+
+/* כותרת (אני / מומחה / לקוח) */
+.message-sender {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* צבעים לפי סוג */
+.expert-message .message-sender {
+  color: #0b7a34;
+}
+
+.client-message .message-sender {
+  color: #374151;
+}
+
+/* אני (מי שמחובר) */
+.my-message .message-sender {
+  color: #2563eb;
+}
+
+/* תוכן ההודעה */
+.chat-message p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* צבע טקסט לפי סוג */
+.expert-message p {
+  color: #0f6b35;
+}
+
+.client-message p {
+  color: #111827;
+}
+
+/* תמונה אם יש */
+.message-image {
+  max-width: 180px;
+  margin-top: 8px;
+  border-radius: 12px;
+}
+
+/* INPUT */
+.chat-input-area {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid #ddd;
+  background: white;
+}
+
+.chat-input-area input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 22px;
+  padding: 12px 16px;
+  font-size: 15px;
+  outline: none;
+}
+
+.chat-input-area input:focus {
+  border-color: #70b889;
+}
+
+/* כפתור */
+.chat-input-area button {
+  border: none;
+  border-radius: 22px;
+  padding: 0 24px;
+  background: #1f7a45;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.chat-input-area button:hover {
+  background: #176536;
+}
+
+/* רספונסיבי */
+@media (max-width: 800px) {
+  .chat-container {
+    height: 85vh;
+  }
+
+  .chat-message {
+    max-width: 85%;
+  }
+}
+/* REVIEW */
+.review-area {
+  padding: 12px 16px;
+  background: #ffffff;
+  border-top: 1px solid #eee;
+}
+
+.open-review-button {
+  border: none;
+  border-radius: 18px;
+  padding: 10px 18px;
+  background: #e7f5ec;
+  color: #176536;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.open-review-button:hover {
+  background: #d6f0df;
+}
+
+.review-box {
+  background: #f4f6f8;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.review-box h3 {
+  margin-top: 0;
+  color: #111;
+}
+
+.review-box label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.review-box select {
+  width: 160px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.review-box textarea {
+  width: 100%;
+  min-height: 80px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.review-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.review-buttons button {
+  border: none;
+  border-radius: 16px;
+  padding: 9px 16px;
+  cursor: pointer;
+}
+
+.review-buttons button:first-child {
+  background: #1f7a45;
+  color: white;
+}
+
+.review-buttons button:last-child {
+  background: #ddd;
+  color: #111;
+}

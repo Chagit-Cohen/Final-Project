@@ -9,3 +9,14 @@ export async function getReviewsByExpertId(expertId: number) {
     return [];
   }
 }
+
+export async function addReview(data: {
+  expertProfileId: number;
+  clientId: number;
+  rating: number;
+  comment: string;
+  clientName: string;
+}) {
+  const response = await axios.post("/api/Review", data);
+  return response.data;
+}

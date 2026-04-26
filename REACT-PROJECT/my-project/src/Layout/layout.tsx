@@ -27,8 +27,14 @@ const Layout = () => {
             </NavLink>
           ) : null}
 
+          {user ? (
+            <NavLink to="/my-chats">
+              הצ׳אטים שלי
+            </NavLink>
+          ) : null}
 
-   
+
+
 
           {user ? null : <NavLink to="/Login">Login</NavLink>}
 
@@ -49,7 +55,7 @@ const Layout = () => {
       <main>
         <Outlet />
       </main>
- 
+
     </>
   )
 }

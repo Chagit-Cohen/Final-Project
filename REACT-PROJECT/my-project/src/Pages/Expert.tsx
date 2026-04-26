@@ -4,6 +4,9 @@ import { getExpertsById } from "../Service/expertService";
 import { getReviewsByExpertId } from "../Service/reviewService";
 import type { Expert } from "../Types/expert";
 import type { Review } from "../Types/review";
+import { useNavigate } from "react-router";
+import { addServiceCall } from "../Service/serviceCallService";
+import { useAuthContext } from "../Authoration/useAuthContext";
 import "../Style/Expert.css";
 
 
@@ -53,6 +56,8 @@ export default function ExpertPage() {
   const { id } = useParams();
   const [expert, setExpert] = useState<Expert | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const navigate = useNavigate();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     async function loadExpert() {
@@ -65,6 +70,28 @@ export default function ExpertPage() {
     loadExpert();
   }, [id]);
 
+ const openChat = async () => {
+  if (!user) {
+    navigate("/Login");
+    return;
+  }
+
+  if (!expert) return;
+
+  const serviceCall = await addServiceCall({
+    clientId: user.id,
+    expertId: expert.userId,
+    title: "פנייה",
+    description: "פנייה חדשה",
+    initialImageUrl: null
+  });
+
+  navigate(`/chat/${serviceCall.id}`);
+};
+
+
+
+
   if (!expert) return <p>טוען...</p>;
 
 
@@ -73,16 +100,16 @@ export default function ExpertPage() {
   return (
     <div className="expert-page">
 
-      
+
       <div className="expert-card-full">
 
         <div className="expert-card-full-top">
-              <img
-                src={`https://localhost:7082/Images/${expert.profileUrl ? expert.profileUrl : "default.png"}`}
-                alt="Profile"
-              
-              />
-          
+          <img
+            src={`https://localhost:7082/Images/${expert.profileUrl}`}
+            alt="Profile"
+
+          />
+
 
           <h1>{expert.fullName}</h1>
 
@@ -107,12 +134,12 @@ export default function ExpertPage() {
             )}
           </div>
         </div>
-        
 
-  
+
+
         <div className="expert-card-body">
 
-          
+
           <div className="expert-info-grid">
             <div className="expert-info-item">
               <span className="expert-info-label">עיר</span>
@@ -124,18 +151,23 @@ export default function ExpertPage() {
               <span className="expert-info-value price">₪{expert.basePrice}</span>
             </div>
 
-           
-          {expert.bio && (
-            <div className="expert-bio-block">
-              <div className="expert-bio-label">אודות</div>
-              <p className="expert-bio-text">{expert.bio}</p>
-            </div>
-          )}
+
+            {expert.bio && (
+              <div className="expert-bio-block">
+                <div className="expert-bio-label">אודות</div>
+                <p className="expert-bio-text">{expert.bio}</p>
+              </div>
+
+            )}
+            <button onClick={openChat}>
+              פתח צ׳אט עם המומחה
+            </button>
+
+          </div>
         </div>
       </div>
-    </div>
 
- 
+
       {reviews.length > 0 && (
         <div className="reviews-section">
           <h2>ביקורות לקוחות</h2>
@@ -145,7 +177,7 @@ export default function ExpertPage() {
               {marqueeReviews.map((review, index) => (
                 <div className="review-card" key={index}>
 
-          
+
                   <div className="review-stars-row">
                     {Array.from({ length: 5 }, (_, i) => (
                       <svg
@@ -168,6 +200,7 @@ export default function ExpertPage() {
 
                   <p className="review-text">"{review.comment}"</p>
                   <p className="review-name">{review.clientName}</p>
+
                 </div>
               ))}
             </div>
