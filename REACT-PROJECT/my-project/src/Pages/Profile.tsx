@@ -128,6 +128,8 @@ export default function Profile() {
 
       data.append("City", user.city);
       data.append("FullName", user.fullName);
+     data.append("profileUrl", user.profileUrl || "");
+
 
 
       await updateExpertProfile(user.id, data);
