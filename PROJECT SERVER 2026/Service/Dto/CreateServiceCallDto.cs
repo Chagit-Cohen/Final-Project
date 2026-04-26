@@ -6,20 +6,16 @@ using System.Threading.Tasks;
 
 namespace Service.Dto
 {
-    public class ServiceCallDto
+    public class CreateServiceCallDto
     {
-        public int Id { get; set; }
-
         public int ClientId { get; set; }
+
         public int ExpertId { get; set; }
 
         public string Title { get; set; }
+
         public string Description { get; set; }
 
         public string? InitialImageUrl { get; set; }
-
-        public string Status { get; set; }
-
-        public DateTime CreatedAt { get; set; }
     }
 }

@@ -14,11 +14,11 @@ namespace Repository.Models
         public int Id { get; set; }
         public int ServiceCallId { get; set; }// קישור לקריאה שאליה שייכת ההודעה
         [ForeignKey("ServiceCallId")]
-        public ServiceCall ServiceCall { get; set; }
+        public ServiceCall? ServiceCall { get; set; }
 
         public int SenderId { get; set; } // מזהה השולח
-        public string Content { get; set; }// תוכן ההודעה
-        public string AttachmentUrl { get; set; } // תמונה שנשלחה בצ'אט
+        public string? Content { get; set; }// תוכן ההודעה
+        public string? AttachmentUrl { get; set; } // תמונה שנשלחה בצ'אט
         public DateTime SentAt { get; set; }
     }
 }

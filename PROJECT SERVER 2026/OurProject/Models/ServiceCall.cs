@@ -25,7 +25,7 @@ namespace Repository.Models
         [Required]
         public string Description { get; set; }
 
-        public string InitialImageUrl { get; set; } // URL לתמונה 
+        public string? InitialImageUrl { get; set; } // URL לתמונה 
 
         public string Status { get; set; }  // סטטוס הקריאה למשל: "פתוחה", "בתהליך", "נסגרה
         public DateTime CreatedAt { get; set; }

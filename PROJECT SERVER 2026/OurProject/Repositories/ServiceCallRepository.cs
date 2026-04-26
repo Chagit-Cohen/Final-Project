@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public class ServiceCallRepository:IRepository<ServiceCall>
+    public class ServiceCallRepository : IRepositoryServiceCall
     {
         private readonly IContext context;
+
         public ServiceCallRepository(IContext context)
         {
             this.context = context;
         }
+
         public async Task<ServiceCall> AddItem(ServiceCall sc)
         {
             await context.serviceCalls.AddAsync(sc);
@@ -23,34 +25,12 @@ namespace Repository.Repositories
             return sc;
         }
 
-        public async Task DeleteItem(int id)
-        {
-            ServiceCall sc = await GetById(id);
-            if (sc != null)
-            {
-                context.serviceCalls.Remove(sc);
-                context.save();
-            }
-        }
-
-        public async Task<List<ServiceCall>> GetAll()
-        {
-            return await context.serviceCalls.Include(x => x.Client).Include(x => x.Expert).ToListAsync();
-        }
-
-        public async Task<ServiceCall> GetById(int id)
-        {
-            return await context.serviceCalls.Include(x => x.Client).Include(x => x.Expert).FirstOrDefaultAsync(x => x.Id == id);
-
-        }
-
-        public async Task<List<ServiceCall>> GetByExpertId(int expertId)
+        public async Task<ServiceCall?> GetById(int id)
         {
             return await context.serviceCalls
-                .Where(sc => sc.ExpertId == expertId)
-                .Include(sc => sc.Client)
-                .Include(sc => sc.Expert)
-                .ToListAsync();
+                .Include(x => x.Client)
+                .Include(x => x.Expert)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<ServiceCall>> GetByClientId(int clientId)
@@ -62,16 +42,25 @@ namespace Repository.Repositories
                 .ToListAsync();
         }
 
-        public async Task UpdateItem(int id, ServiceCall item)
+        public async Task<List<ServiceCall>> GetByExpertId(int expertId)
         {
-            ServiceCall sc = await GetById(id);
+            return await context.serviceCalls
+                .Where(sc => sc.ExpertId == expertId)
+                .Include(sc => sc.Client)
+                .Include(sc => sc.Expert)
+                .ToListAsync();
+        }
+
+        public async Task UpdateStatus(int id, string status)
+        {
+            var sc = await context.serviceCalls
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             if (sc != null)
             {
-                sc.Status =item.Status;
-
+                sc.Status = status;
                 context.save();
             }
-
         }
     }
 }

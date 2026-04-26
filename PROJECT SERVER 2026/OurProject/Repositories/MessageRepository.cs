@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories
 {
-    public class MessageRepository : IRepository<Message>
+    public class MessageRepository : IRepositoryMessage
     {
         private readonly IContext context;
 
@@ -25,33 +25,14 @@ namespace Repository.Repositories
             return message;
         }
 
-        public async Task<List<Message>> GetAll()
-        {
-            return await context.messages.ToListAsync();
-        }
 
-        // פונקציה נוספת שחשובה לצאט:
+
         public async Task<List<Message>> GetByServiceCallId(int serviceCallId)
         {
             return await context.messages
                 .Where(m => m.ServiceCallId == serviceCallId)
-                .OrderBy(m => m.SentAt) // סידור לפי זמן כדי שהצאט יהיה רציף
+                .OrderBy(m => m.SentAt)
                 .ToListAsync();
-        }
-
-        public async Task<Message> GetById(int id)
-        {
-            return await context.messages.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public Task DeleteItem(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateItem(int id, Message item)
-        {
-            throw new NotImplementedException();
         }
     }
 }

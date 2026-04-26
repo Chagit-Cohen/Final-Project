@@ -10,6 +10,7 @@ using Service.Dto;
 using Service.Interfaces;
 using Service.Services;
 using System.Text;
+using WebApi.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,17 +20,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactPolicy",
         policy =>
         {
-            policy.AllowAnyOrigin()      // ?? מאפשר כל פורט, רק לפיתוח
+            policy.WithOrigins("http://localhost:5173") // הפורט של React 
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .AllowAnyMethod()
+                  .AllowCredentials();
         });
 });
-
 
 
 //סווגר עם אבטחה
@@ -80,6 +82,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 // הזרקת תלויות
+
+builder.Services.AddSignalR();
+
+builder.Services.AddScoped<IRepositoryMessage, MessageRepository>();
+builder.Services.AddScoped<IRepositoryServiceCall, ServiceCallRepository>();
+
+builder.Services.AddScoped<IServiceMessage, MessageService>();
+builder.Services.AddScoped<IServiceServiceCall, ServiceCallService>();
+
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IServiceUser<UserDto>, UserService>();
 
@@ -102,6 +113,7 @@ builder.Services.AddScoped<ILogin, UserLoginService>();
 
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -127,5 +139,7 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

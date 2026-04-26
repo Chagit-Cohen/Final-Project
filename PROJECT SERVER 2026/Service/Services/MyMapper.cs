@@ -39,6 +39,11 @@ namespace Service.Services
                     x => x.MapFrom(y => y.ProfileImage != null ? y.ProfileImage.FileName : null));
 
 
+
+            CreateMap<ServiceCall, ServiceCallDto>().ReverseMap();
+            CreateMap<Message, MessageDto>().ReverseMap();
+
+
         }
     }
 }
