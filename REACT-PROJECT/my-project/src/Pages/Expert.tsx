@@ -34,7 +34,7 @@ function StarsRow({
   rating,
   size = 34,
   className = "expert-stars-row",
-  starClass = "",
+  // starClass = "",
 }: {
   rating: number;
   size?: number;
@@ -86,7 +86,7 @@ export default function ExpertPage() {
 
     const serviceCall = await addServiceCall({
       clientId: user.id,
-      expertId: expert.id,
+      expertId: expert.userId,
       title,
       description,
       initialImageUrl: null

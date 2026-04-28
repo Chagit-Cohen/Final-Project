@@ -6,7 +6,7 @@ import axios from "../Service/axios";
 
 type AuthStateType = {
     user: User | null,
-    isInitialized: boolean,
+    isInitialized: boolean
 }
 
 type AuthContextType = AuthStateType & {

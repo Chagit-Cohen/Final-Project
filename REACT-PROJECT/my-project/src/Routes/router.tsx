@@ -51,6 +51,16 @@ const Router = () => {
             </AuthGuard>
           )
         }
+        ,
+        {
+          path: "/Profile",
+          element: (
+            <AuthGuard>
+              <Profile />
+            </AuthGuard>
+
+          )
+        }
 
 
 
@@ -75,16 +85,8 @@ const Router = () => {
       )
     },
 
-    {
-      path: "/Profile",
-      element: (
-        <AuthGuard>
-          <Profile />
-        </AuthGuard>
 
-      )
-    }
-    ,
+
     {
       path: "*",
       element: <Navigate to="/" />

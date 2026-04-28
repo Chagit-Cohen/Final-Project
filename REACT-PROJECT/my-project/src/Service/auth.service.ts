@@ -12,7 +12,6 @@ export const login = async (email: string, password: string) => {
 
 
 export const register = async (formData: FormData) => {
-  console.log("Submitting user:", formData);
   const response = await axios.post("/api/User", formData, {
     headers: {
       "Content-Type": "multipart/form-data"

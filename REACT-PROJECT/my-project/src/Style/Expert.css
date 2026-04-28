@@ -547,3 +547,62 @@
   margin: 0 auto 22px;  /* ← זה ממרכז */
   box-shadow: 0 0 26px rgba(57, 255, 136, 0.42);
 }
+/* ─── Chat Button – Obsidian Forest Style ─── */
+.expert-info-grid button {
+  grid-column: 1 / -1; /* שיתפרס על כל הרוחב */
+  margin-top: 18px;
+  padding: 14px 20px;
+
+  border-radius: var(--r-md);
+  border: 1px solid var(--b-g2);
+
+  background: linear-gradient(140deg, var(--bg-2), var(--bg-card-2));
+  color: var(--t-accent);
+
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  transition: all var(--tm) var(--ease);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 10px 22px rgba(0,0,0,0.45);
+}
+
+/* פס ירוק עדין בצד (כמו bio) */
+.expert-info-grid button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--g-mid), transparent);
+  opacity: 0.7;
+}
+
+/* Hover */
+.expert-info-grid button:hover {
+  border-color: var(--b-g3);
+  color: #ffffff;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 16px 36px rgba(0,0,0,0.6),
+    0 0 18px rgba(42,138,74,0.15);
+}
+
+/* Active */
+.expert-info-grid button:active {
+  transform: translateY(0);
+  box-shadow:
+    inset 0 3px 8px rgba(0,0,0,0.6),
+    0 6px 16px rgba(0,0,0,0.4);
+}

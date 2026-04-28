@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { register } from "../Service/auth.service";
-import "../Style/Register.css"; // [נוסף]
+import "../Style/Register.css"; 
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../Authoration/useAuthContext";
 import axiosInstance from "../Service/axios";
@@ -55,7 +55,7 @@ export default function Register() {
       data.append("Password", formData.password);
       data.append("City", formData.city);
 
-      if (formData.profileImage) {//?
+      if (formData.profileImage) {
         data.append("ProfileImage", formData.profileImage);
       }
 
@@ -70,9 +70,9 @@ export default function Register() {
         city: "",
         profileImage: null
       });
-      localStorage.removeItem("token");
-      delete axiosInstance.defaults.headers.common.Authorization;
-      setUser(null);
+      // localStorage.removeItem("token");
+      // delete axiosInstance.defaults.headers.common.Authorization;
+      // setUser(null);
       setTimeout(() => {
         navigate("/login");
       }, 3000);

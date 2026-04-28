@@ -8,7 +8,7 @@ type Props = {
 }
 
 const AuthGuard = ({ children, requireAdmin }: Props) => {
-    const { isAuthorized, isInitialized, user } = useAuthContext();
+    const {isAuthorized, isInitialized, user } = useAuthContext();
 
     if (!isInitialized) {
         return <h1>Loading...</h1>;

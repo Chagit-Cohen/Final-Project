@@ -1,17 +1,6 @@
-/* @import "./Login.css";
+ @import "./Login.css"; */
 
-.register-page .auth-card {
-  max-width: 560px;
-}
 
-.register-page textarea {
-  scrollbar-color: var(--green-deep) rgba(4, 8, 7, 0.96);
-}
-
-.register-page select option {
-  color: #f4fff8;
-  background: #07100d;
-} */
 /* 🔥 עיצוב ל-select עצמו */
 .register-page select {
   width: 100%;
@@ -42,7 +31,9 @@
 /* 🔥 option hover (לא תמיד נתמך בכל דפדפן אבל שווה) */
 .register-page select option:hover {
   background: rgba(0, 255, 150, 0.2);
+  
 }
+
 
 /* 🔥 חץ קטן מותאם */
 .register-page select {
@@ -51,4 +42,7 @@
   background-repeat: no-repeat;
   background-position: left 10px center;
   background-size: 16px;
+}
+.auth-btn:hover {
+  color: #ffffff;
 }

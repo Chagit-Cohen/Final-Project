@@ -14,7 +14,6 @@ export default function Login() {
     formData.email.trim() !== "" &&
     formData.password.trim() !== "";
 
-
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -38,10 +37,9 @@ export default function Login() {
 
       setMessage("התחברת בהצלחה");
 
-      console.log("Login result:", user, token);
 
       setFormData({ email: "", password: "" });
-          navigate("/");
+      navigate("/");
 
     }
     catch (err: any) {
