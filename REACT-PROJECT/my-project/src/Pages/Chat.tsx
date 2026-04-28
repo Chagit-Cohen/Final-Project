@@ -1,8 +1,9 @@
+
 // import { useEffect, useRef, useState } from "react";
 // import { useParams } from "react-router";
 // import * as signalR from "@microsoft/signalr";
 // import { getMessagesByServiceCallId } from "../Service/messageService";
-// import { getServiceCallById } from "../Service/serviceCallService";
+// import { getServiceCallById, updateServiceCallStatus } from "../Service/serviceCallService";
 // import { addReview } from "../Service/reviewService";
 // import { getSession } from "../Authoration/Seesion";
 // import { useAuthContext } from "../Authoration/useAuthContext";
@@ -11,210 +12,274 @@
 // import "../Style/Chat.css";
 
 // function Chat() {
-//   const { serviceCallId } = useParams();
-//   const { user } = useAuthContext();
+//     const { serviceCallId } = useParams();
+//     const { user } = useAuthContext();
 
-//   const [messages, setMessages] = useState<Message[]>([]);
-//   const [content, setContent] = useState("");
-//   const [serviceCall, setServiceCall] = useState<ServiceCall | null>(null);
+//     const [messages, setMessages] = useState<Message[]>([]);
+//     const [content, setContent] = useState("");
+//     const [serviceCall, setServiceCall] = useState<ServiceCall | null>(null);
 
-//   const [showReview, setShowReview] = useState(false);
-//   const [rating, setRating] = useState(5);
-//   const [comment, setComment] = useState("");
+//     const [showReview, setShowReview] = useState(false);
+//     const [rating, setRating] = useState(5);
+//     const [comment, setComment] = useState("");
+//     const [reviewSent, setReviewSent] = useState(false);
 
-//   const connectionRef = useRef<signalR.HubConnection | null>(null);
+//     const connectionRef = useRef<signalR.HubConnection | null>(null);
 
-//   useEffect(() => {
-//     if (!serviceCallId) return;
+//     useEffect(() => {
+//         if (!serviceCallId) return;
 
-//     loadChatData();
-//     connect();
+//         loadChatData();
+//         connect();
 
-//     return () => {
-//       connectionRef.current?.stop();
-//       connectionRef.current = null;
+//         return () => {
+//             connectionRef.current?.stop();
+//             connectionRef.current = null;
+//         };
+//     }, [serviceCallId]);
+
+//     const loadChatData = async () => {
+//         const callData = await getServiceCallById(Number(serviceCallId));
+//         setServiceCall(callData);
+
+//         const messagesData = await getMessagesByServiceCallId(Number(serviceCallId));
+//         setMessages(messagesData);
 //     };
-//   }, [serviceCallId]);
 
-//   const loadChatData = async () => {
-//     const callData = await getServiceCallById(Number(serviceCallId));
-//     setServiceCall(callData);
+//     const connect = async () => {
+//         if (connectionRef.current) return;
 
-//     const messagesData = await getMessagesByServiceCallId(Number(serviceCallId));
-//     setMessages(messagesData);
-//   };
+//         const connection = new signalR.HubConnectionBuilder()
+//             .withUrl("https://localhost:7082/chatHub", {
+//                 accessTokenFactory: () => getSession() || ""
+//             })
+//             .withAutomaticReconnect()
+//             .build();
 
-//   const connect = async () => {
-//     if (connectionRef.current) return;
+//         connection.on("ReceiveMessage", (message: Message) => {
+//             setMessages(prev => {
+//                 if (prev.some(m => m.id === message.id)) return prev;
+//                 return [...prev, message];
+//             });
+//         });
 
-//     const connection = new signalR.HubConnectionBuilder()
-//       .withUrl("https://localhost:7082/chatHub", {
-//         accessTokenFactory: () => getSession() || ""
-//       })
-//       .withAutomaticReconnect()
-//       .build();
+//         await connection.start();
+//         await connection.invoke("JoinServiceCallGroup", Number(serviceCallId));
 
-//     connection.on("ReceiveMessage", (message: Message) => {
-//       setMessages(prev => {
-//         if (prev.some(m => m.id === message.id)) return prev;
-//         return [...prev, message];
-//       });
-//     });
+//         connectionRef.current = connection;
+//     };
 
-//     await connection.start();
-//     await connection.invoke("JoinServiceCallGroup", Number(serviceCallId));
+//     const isClient =
+//         user &&
+//         serviceCall &&
+//         user.id === serviceCall.clientId;
 
-//     connectionRef.current = connection;
-//   };
+//     const isExpert =
+//         user &&
+//         serviceCall &&
+//         user.id === serviceCall.expertId;
 
-//   const sendMessage = async () => {
-//     if (!connectionRef.current) return;
-//     if (!user) return;
-//     if (!content.trim()) return;
+//     const isClosed =
+//         serviceCall?.status === "נסגרה";
 
-//     await connectionRef.current.invoke("SendMessage", {
-//       serviceCallId: Number(serviceCallId),
-//       senderId: user.id,
-//       content,
-//       attachmentUrl: null
-//     });
+//     const canCloseServiceCall =
+//         (isClient || isExpert) && !isClosed;
 
-//     setContent("");
-//   };
+//     const canWriteReview =
+//         isClient && isClosed && !reviewSent;
 
-//   const sendReview = async () => {
-//     if (!user || !serviceCall) return;
-//     if (!comment.trim()) return;
+//     const sendMessage = async () => {
+//         if (isClosed) {
+//             alert("הפנייה נסגרה, אי אפשר לשלוח הודעות נוספות");
+//             return;
+//         }
 
-//     await addReview({
-//       expertProfileId: serviceCall.expertId,
-//       clientId: user.id,
-//       rating,
-//       comment
-//     });
+//         if (!connectionRef.current) return;
+//         if (!user) return;
+//         if (!content.trim()) return;
 
-//     setShowReview(false);
-//     setRating(5);
-//     setComment("");
+//         await connectionRef.current.invoke("SendMessage", {
+//             serviceCallId: Number(serviceCallId),
+//             senderId: user.id,
+//             content,
+//             attachmentUrl: null
+//         });
 
-//     alert("הביקורת נשלחה בהצלחה");
-//   };
+//         setContent("");
+//     };
 
-//   const getSenderText = (message: Message) => {
-//     if (!serviceCall || !user) return "";
+//     const closeServiceCall = async () => {
+//         if (!serviceCall) return;
 
-//     if (message.senderId === user.id) return "אני";
-//     if (message.senderId === serviceCall.expertId) return "מומחה";
+//         await updateServiceCallStatus(serviceCall.id, "נסגרה");
 
-//     return "לקוח";
-//   };
+//         setServiceCall({
+//             ...serviceCall,
+//             status: "נסגרה"
+//         });
 
-//   const getMessageClass = (message: Message) => {
-//     if (!serviceCall) return "chat-message";
+//         alert("הפנייה נסגרה בהצלחה");
+//     };
 
-//     const isMine = message.senderId === user?.id;
-//     const isExpert = message.senderId === serviceCall.expertId;
+//     const sendReview = async () => {
+//         if (!user || !serviceCall) return;
 
-//     return `
-//       chat-message
-//       ${isMine ? "my-message" : "other-message"}
-//       ${isExpert ? "expert-message" : "client-message"}
-//     `;
-//   };
+//         if (!comment.trim()) {
+//             alert("חובה לכתוב ביקורת");
+//             return;
+//         }
 
-//   const canWriteReview =
-//     user &&
-//     serviceCall &&
-//     user.id === serviceCall.clientId;
+//         await addReview({
+//             expertProfileId: serviceCall.expertId,
+//             clientId: user.id,
+//             rating,
+//             comment,
+//             clientName: user.fullName
+//         });
 
-//   return (
-//     <div className="chat-page">
-//       <div className="chat-container">
-//         <div className="chat-header">
-//           <h2>צ׳אט</h2>
-//           {serviceCall && <p>{serviceCall.title}</p>}
-//         </div>
+//         setShowReview(false);
+//         setRating(5);
+//         setComment("");
+//         setReviewSent(true);
 
-//         <div className="chat-messages">
-//           {messages.map(message => (
-//             <div key={message.id} className={getMessageClass(message)}>
-//               <span className="message-sender">
-//                 {getSenderText(message)}
-//               </span>
+//         alert("הביקורת נשלחה בהצלחה");
+//     };
 
-//               <p>{message.content}</p>
-//             </div>
-//           ))}
-//         </div>
+//     const getSenderText = (message: Message) => {
+//         if (!serviceCall || !user) return "";
 
-//         {canWriteReview && (
-//           <div className="review-area">
-//             {!showReview ? (
-//               <button
-//                 className="open-review-button"
-//                 onClick={() => setShowReview(true)}
-//               >
-//                 כתיבת ביקורת על המומחה
-//               </button>
-//             ) : (
-//               <div className="review-box">
-//                 <h3>כתיבת ביקורת</h3>
+//         if (message.senderId === user.id) return "אני";
+//         if (message.senderId === serviceCall.expertId) return "מומחה";
 
-//                 <label>דירוג:</label>
-//                 <select
-//                   value={rating}
-//                   onChange={e => setRating(Number(e.target.value))}
-//                 >
-//                   <option value={5}>5 - מצוין</option>
-//                   <option value={4}>4 - טוב מאוד</option>
-//                   <option value={3}>3 - טוב</option>
-//                   <option value={2}>2 - בינוני</option>
-//                   <option value={1}>1 - לא טוב</option>
-//                 </select>
+//         return "לקוח";
+//     };
 
-//                 <textarea
-//                   value={comment}
-//                   onChange={e => setComment(e.target.value)}
-//                   placeholder="כתבי ביקורת..."
-//                 />
+//     const getMessageClass = (message: Message) => {
+//         if (!serviceCall) return "chat-message";
 
-//                 <div className="review-buttons">
-//                   <button onClick={sendReview}>
-//                     שלח ביקורת
-//                   </button>
+//         const isMine = message.senderId === user?.id;
+//         const isExpertMessage = message.senderId === serviceCall.expertId;
 
-//                   <button onClick={() => setShowReview(false)}>
-//                     ביטול
-//                   </button>
+//         return `
+//             chat-message
+//             ${isMine ? "my-message" : "other-message"}
+//             ${isExpertMessage ? "expert-message" : "client-message"}
+//         `;
+//     };
+
+//     return (
+//         <div className="chat-page">
+//             <div className="chat-container">
+//                 <div className="chat-header">
+//                     <h2>צ׳אט</h2>
+//                     {serviceCall && <p>{serviceCall.title}</p>}
+//                     {isClosed && <p className="closed-call-text">הפנייה נסגרה</p>}
 //                 </div>
-//               </div>
-//             )}
-//           </div>
-//         )}
 
-//         <div className="chat-input-area">
-//           <input
-//             value={content}
-//             onChange={e => setContent(e.target.value)}
-//             placeholder="כתוב הודעה..."
-//             onKeyDown={e => {
-//               if (e.key === "Enter") sendMessage();
-//             }}
-//           />
+//                 <div className="chat-messages">
+//                     {messages.map(message => (
+//                         <div key={message.id} className={getMessageClass(message)}>
+//                             <span className="message-sender">
+//                                 {getSenderText(message)}
+//                             </span>
 
-//           <button onClick={sendMessage}>שלח</button>
+//                             <p>{message.content}</p>
+//                         </div>
+//                     ))}
+//                 </div>
+
+//                 {canCloseServiceCall && (
+//                     <div className="review-area">
+//                         <button
+//                             className="open-review-button"
+//                             onClick={closeServiceCall}
+//                         >
+//                             סגירת פנייה
+//                         </button>
+//                     </div>
+//                 )}
+
+//                 {canWriteReview && (
+//                     <div className="review-area">
+//                         {!showReview ? (
+//                             <button
+//                                 className="open-review-button"
+//                                 onClick={() => setShowReview(true)}
+//                             >
+//                                 כתיבת ביקורת על המומחה
+//                             </button>
+//                         ) : (
+//                             <div className="review-box">
+//                                 <h3>כתיבת ביקורת</h3>
+
+//                                 <label>דירוג:</label>
+//                                 <select
+//                                     value={rating}
+//                                     onChange={e => setRating(Number(e.target.value))}
+//                                 >
+//                                     <option value={5}>5 - מצוין</option>
+//                                     <option value={4}>4 - טוב מאוד</option>
+//                                     <option value={3}>3 - טוב</option>
+//                                     <option value={2}>2 - בינוני</option>
+//                                     <option value={1}>1 - לא טוב</option>
+//                                 </select>
+
+//                                 <textarea
+//                                     value={comment}
+//                                     onChange={e => setComment(e.target.value)}
+//                                     placeholder="כתבי ביקורת..."
+//                                 />
+
+//                                 <div className="review-buttons">
+//                                     <button onClick={sendReview}>
+//                                         שלח ביקורת
+//                                     </button>
+
+//                                     <button onClick={() => setShowReview(false)}>
+//                                         ביטול
+//                                     </button>
+//                                 </div>
+//                             </div>
+//                         )}
+//                     </div>
+//                 )}
+
+//                 {reviewSent && (
+//                     <div className="review-area">
+//                         <p className="review-success-text">
+//                             הביקורת נשלחה בהצלחה
+//                         </p>
+//                     </div>
+//                 )}
+
+//                 {!isClosed ? (
+//                     <div className="chat-input-area">
+//                         <input
+//                             value={content}
+//                             onChange={e => setContent(e.target.value)}
+//                             placeholder="כתוב הודעה..."
+//                             onKeyDown={e => {
+//                                 if (e.key === "Enter") sendMessage();
+//                             }}
+//                         />
+
+//                         <button onClick={sendMessage}>שלח</button>
+//                     </div>
+//                 ) : (
+//                     <div className="chat-input-area closed-input-area">
+//                         הפנייה נסגרה, לא ניתן לשלוח הודעות נוספות
+//                     </div>
+//                 )}
+//             </div>
 //         </div>
-//       </div>
-//     </div>
-//   );
+//     );
 // }
 
 // export default Chat;
 
 
-
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import * as signalR from "@microsoft/signalr";
 import { getMessagesByServiceCallId } from "../Service/messageService";
 import { getServiceCallById, updateServiceCallStatus } from "../Service/serviceCallService";
@@ -227,6 +292,7 @@ import "../Style/Chat.css";
 
 function Chat() {
     const { serviceCallId } = useParams();
+    const navigate = useNavigate();
     const { user } = useAuthContext();
 
     const [messages, setMessages] = useState<Message[]>([]);
@@ -282,7 +348,37 @@ function Chat() {
         connectionRef.current = connection;
     };
 
+    const isClient =
+        user &&
+        serviceCall &&
+        user.id === serviceCall.clientId;
+
+    const isExpert =
+        user &&
+        serviceCall &&
+        user.id === serviceCall.expertId;
+
+    const isClosed =
+        serviceCall?.status === "נסגרה";
+
+    const isReviewed =
+        serviceCall?.status === "דורגה";
+
+    const isFinished =
+        isClosed || isReviewed;
+
+    const canCloseServiceCall =
+        (isClient || isExpert) && !isFinished;
+
+    const canWriteReview =
+        isClient && isClosed;
+
     const sendMessage = async () => {
+        if (isFinished) {
+            alert("הפנייה נסגרה, אי אפשר לשלוח הודעות נוספות");
+            return;
+        }
+
         if (!connectionRef.current) return;
         if (!user) return;
         if (!content.trim()) return;
@@ -296,6 +392,7 @@ function Chat() {
 
         setContent("");
     };
+
     const closeServiceCall = async () => {
         if (!serviceCall) return;
 
@@ -311,7 +408,11 @@ function Chat() {
 
     const sendReview = async () => {
         if (!user || !serviceCall) return;
-        if (!comment.trim()) return;
+
+        if (!comment.trim()) {
+            alert("כתבי ביקורת או לחצי ביטול ותחזרי לזה בהזדמנות");
+            return;
+        }
 
         await addReview({
             expertProfileId: serviceCall.expertId,
@@ -321,11 +422,22 @@ function Chat() {
             clientName: user.fullName
         });
 
+        await updateServiceCallStatus(serviceCall.id, "דורגה");
+
+        setServiceCall({
+            ...serviceCall,
+            status: "דורגה"
+        });
+
         setShowReview(false);
         setRating(5);
         setComment("");
 
         alert("הביקורת נשלחה בהצלחה");
+
+        setTimeout(() => {
+            navigate("/my-chats");
+        }, 1200);
     };
 
     const getSenderText = (message: Message) => {
@@ -341,28 +453,14 @@ function Chat() {
         if (!serviceCall) return "chat-message";
 
         const isMine = message.senderId === user?.id;
-        const isExpert = message.senderId === serviceCall.expertId;
+        const isExpertMessage = message.senderId === serviceCall.expertId;
 
         return `
-      chat-message
-      ${isMine ? "my-message" : "other-message"}
-      ${isExpert ? "expert-message" : "client-message"}
-    `;
+            chat-message
+            ${isMine ? "my-message" : "other-message"}
+            ${isExpertMessage ? "expert-message" : "client-message"}
+        `;
     };
-
-    const isClient =
-        user &&
-        serviceCall &&
-        user.id === serviceCall.clientId;
-
-    const isClosed =
-        serviceCall?.status === "נסגרה";
-
-    const canCloseServiceCall =
-        isClient && !isClosed;
-
-    const canWriteReview =
-        isClient && isClosed;
 
     return (
         <div className="chat-page">
@@ -370,6 +468,18 @@ function Chat() {
                 <div className="chat-header">
                     <h2>צ׳אט</h2>
                     {serviceCall && <p>{serviceCall.title}</p>}
+
+                    {isClosed && (
+                        <p className="closed-call-text">
+                            הפנייה נסגרה - ניתן לכתוב ביקורת
+                        </p>
+                    )}
+
+                    {isReviewed && (
+                        <p className="closed-call-text">
+                            הפנייה נסגרה והביקורת כבר נשלחה
+                        </p>
+                    )}
                 </div>
 
                 <div className="chat-messages">
@@ -384,7 +494,6 @@ function Chat() {
                     ))}
                 </div>
 
-
                 {canCloseServiceCall && (
                     <div className="review-area">
                         <button
@@ -395,6 +504,7 @@ function Chat() {
                         </button>
                     </div>
                 )}
+
                 {canWriteReview && (
                     <div className="review-area">
                         {!showReview ? (
@@ -440,18 +550,24 @@ function Chat() {
                     </div>
                 )}
 
-                <div className="chat-input-area">
-                    <input
-                        value={content}
-                        onChange={e => setContent(e.target.value)}
-                        placeholder="כתוב הודעה..."
-                        onKeyDown={e => {
-                            if (e.key === "Enter") sendMessage();
-                        }}
-                    />
+                {!isFinished ? (
+                    <div className="chat-input-area">
+                        <input
+                            value={content}
+                            onChange={e => setContent(e.target.value)}
+                            placeholder="כתוב הודעה..."
+                            onKeyDown={e => {
+                                if (e.key === "Enter") sendMessage();
+                            }}
+                        />
 
-                    <button onClick={sendMessage}>שלח</button>
-                </div>
+                        <button onClick={sendMessage}>שלח</button>
+                    </div>
+                ) : (
+                    <div className="chat-input-area closed-input-area">
+                        הפנייה נסגרה, לא ניתן לשלוח הודעות נוספות
+                    </div>
+                )}
             </div>
         </div>
     );

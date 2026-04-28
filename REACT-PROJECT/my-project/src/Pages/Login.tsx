@@ -41,11 +41,12 @@ export default function Login() {
       console.log("Login result:", user, token);
 
       setFormData({ email: "", password: "" });
+          navigate("/");
+
     }
     catch (err: any) {
       setError(err.response?.data?.message || "אירעה שגיאה")
     }
-    navigate("/");
   }
 
   return (
@@ -84,3 +85,5 @@ export default function Login() {
     </div>
   );
 }
+
+

@@ -70,25 +70,30 @@ export default function ExpertPage() {
     loadExpert();
   }, [id]);
 
- const openChat = async () => {
-  if (!user) {
-    navigate("/Login");
-    return;
-  }
+  const openChat = async () => {
+    if (!user) {
+      navigate("/Login");
+      return;
+    }
 
-  if (!expert) return;
+    if (!expert) return;
 
-  const serviceCall = await addServiceCall({
-    clientId: user.id,
-    expertId: expert.userId,
-    title: "פנייה",
-    description: "פנייה חדשה",
-    initialImageUrl: null
-  });
+    const title = prompt("מה נושא הפנייה?");
+    if (!title) return;
 
-  navigate(`/chat/${serviceCall.id}`);
-};
+    const description = prompt("תארי את הבעיה בקצרה");
+    if (!description) return;
 
+    const serviceCall = await addServiceCall({
+      clientId: user.id,
+      expertId: expert.id,
+      title,
+      description,
+      initialImageUrl: null
+    });
+
+    navigate(`/chat/${serviceCall.id}`);
+  };
 
 
 
@@ -159,9 +164,11 @@ export default function ExpertPage() {
               </div>
 
             )}
-            <button onClick={openChat}>
-              פתח צ׳אט עם המומחה
-            </button>
+            {user?.id !== expert.userId && (
+              <button onClick={openChat}>
+                פתח צ׳אט עם המומחה
+              </button>
+            )}
 
           </div>
         </div>

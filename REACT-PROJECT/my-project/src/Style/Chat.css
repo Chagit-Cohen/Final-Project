@@ -35,6 +35,11 @@
   color: #666;
 }
 
+.closed-call-text {
+  color: #b45309;
+  font-weight: bold;
+}
+
 /* MESSAGES */
 .chat-messages {
   flex: 1;
@@ -49,6 +54,9 @@
   padding: 12px 16px;
   border-radius: 18px;
   margin-bottom: 14px;
+
+  /* ✨ תיקון חשוב */
+  word-break: break-word;
 }
 
 /* צד ימין / שמאל */
@@ -73,7 +81,7 @@
   border: 1px solid #ddd;
 }
 
-/* כותרת (אני / מומחה / לקוח) */
+/* כותרת */
 .message-sender {
   display: block;
   font-size: 13px;
@@ -81,7 +89,6 @@
   margin-bottom: 5px;
 }
 
-/* צבעים לפי סוג */
 .expert-message .message-sender {
   color: #0b7a34;
 }
@@ -90,18 +97,16 @@
   color: #374151;
 }
 
-/* אני (מי שמחובר) */
 .my-message .message-sender {
   color: #2563eb;
 }
 
-/* תוכן ההודעה */
+/* תוכן */
 .chat-message p {
   margin: 0;
   font-size: 16px;
 }
 
-/* צבע טקסט לפי סוג */
 .expert-message p {
   color: #0f6b35;
 }
@@ -110,7 +115,7 @@
   color: #111827;
 }
 
-/* תמונה אם יש */
+/* תמונה */
 .message-image {
   max-width: 180px;
   margin-top: 8px;
@@ -154,21 +159,25 @@
   background: #176536;
 }
 
-/* רספונסיבי */
-@media (max-width: 800px) {
-  .chat-container {
-    height: 85vh;
-  }
+/* מצב סגור */
+.closed-input-area {
+  justify-content: center;
+  align-items: center;
+  color: #777;
+  font-weight: bold;
 
-  .chat-message {
-    max-width: 85%;
-  }
+  /* ✨ שיפור גובה */
+  min-height: 48px;
 }
+
 /* REVIEW */
 .review-area {
   padding: 12px 16px;
   background: #ffffff;
   border-top: 1px solid #eee;
+
+  /* ✨ שלא יימעך */
+  flex-shrink: 0;
 }
 
 .open-review-button {
@@ -241,4 +250,21 @@
 .review-buttons button:last-child {
   background: #ddd;
   color: #111;
+}
+
+.review-success-text {
+  color: #176536;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* רספונסיבי */
+@media (max-width: 800px) {
+  .chat-container {
+    height: 85vh;
+  }
+
+  .chat-message {
+    max-width: 85%;
+  }
 }

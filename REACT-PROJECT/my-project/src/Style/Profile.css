@@ -58,6 +58,7 @@
 
 .profile-page button:hover {
   background: #0b8453;
+   color: black;
 }
 
 .profile-page button[type="button"] {

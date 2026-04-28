@@ -71,3 +71,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+.chat-item span {
+  font-size: 13px;
+  color: #777;
+}

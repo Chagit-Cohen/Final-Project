@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuthContext } from "../Authoration/useAuthContext";
-import {getServiceCallsByClientId,getServiceCallsByExpertId} from "../Service/serviceCallService";
+import { getServiceCallsByClientId, getServiceCallsByExpertId } from "../Service/serviceCallService";
 import type { ServiceCall } from "../Types/serviceCall";
 import "../Style/MyChats.css";
 
@@ -67,8 +67,9 @@ export default function MyChats() {
                             >
                                 <strong>{chat.title}</strong>
                                 <p>{chat.description}</p>
-                                <span>{chat.status}</span>
-                            </div>
+                                <span>
+                                    {chat.status} • {new Date(chat.createdAt).toLocaleDateString("he-IL")}
+                                </span>                            </div>
                         ))
                     )}
                 </div>
@@ -88,7 +89,9 @@ export default function MyChats() {
                                 >
                                     <strong>{chat.title}</strong>
                                     <p>{chat.description}</p>
-                                    <span>{chat.status}</span>
+                                    <span>
+                                        {chat.status} • {new Date(chat.createdAt).toLocaleDateString("he-IL")}
+                                    </span>
                                 </div>
                             ))
                         )}

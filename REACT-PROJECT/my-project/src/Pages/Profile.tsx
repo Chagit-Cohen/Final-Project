@@ -1,13 +1,15 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { useAuthContext } from "../Authoration/useAuthContext";
 import { updateProfile } from "../Service/userService";
-import { updateExpertProfile, getExpertsById, deleteExpertById, returnExpertById,getExpertByIdJustToTheUser } from "../Service/expertService";
+import { updateExpertProfile, getExpertsById, deleteExpertById, returnExpertById, getExpertByIdJustToTheUser } from "../Service/expertService";
 import "../Style/Profile.css";
+import { useNavigate } from "react-router";
 
 export default function Profile() {
   const [hasExpertProfile, setHasExpertProfile] = useState(false);
   const { user, setUser } = useAuthContext();
   const [showExpertDetails, setShowExpertDetails] = useState(false);
+  const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState({
     fullName: "",
     city: "",
@@ -35,31 +37,31 @@ export default function Profile() {
 
 
   useEffect(() => {
-  async function loadExpert() {
-    if (!user?.id) return;
+    async function loadExpert() {
+      if (!user?.id) return;
 
-    try {
-      const ex = await getExpertByIdJustToTheUser(user.id);
+      try {
+        const ex = await getExpertByIdJustToTheUser(user.id);
 
-      if (!ex) {
+        if (!ex) {
+          setHasExpertProfile(false);
+          return;
+        }
+
+        setHasExpertProfile(true);
+
+        setExpertFormData({
+          category: ex.category || "",
+          bio: ex.bio || "",
+          basePrice: ex.basePrice || ""
+        });
+      } catch (err) {
         setHasExpertProfile(false);
-        return;
       }
-
-      setHasExpertProfile(true);
-
-      setExpertFormData({
-        category: ex.category || "",
-        bio: ex.bio || "",
-        basePrice: ex.basePrice || ""
-      });
-    } catch (err) {
-      setHasExpertProfile(false);
     }
-  }
 
-  loadExpert();
-}, [user]);
+    loadExpert();
+  }, [user]);
 
 
 
@@ -82,16 +84,16 @@ export default function Profile() {
     }
   }
 
-function handleExpertChange(
-  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-) {
-  const { name, value } = event.target;
+  function handleExpertChange(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) {
+    const { name, value } = event.target;
 
-  setExpertFormData((prev) => ({
-    ...prev,
-    [name]: value
-  }));
-}
+    setExpertFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
 
   async function handleSubmitUser(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -129,11 +131,11 @@ function handleExpertChange(
 
       data.append("City", user.city);
       data.append("FullName", user.fullName);
-     data.append("profileUrl", user.profileUrl || "");
+      data.append("profileUrl", user.profileUrl || "");
 
 
-      data.append("profileurl",user.profileUrl || "");
-     
+      data.append("profileurl", user.profileUrl || "");
+
 
 
       await updateExpertProfile(user.id, data);
@@ -166,36 +168,36 @@ function handleExpertChange(
     }
   }
   async function handleReturnExpert() {
-  setError("");
-  setMessage("");
-  if (!user) return;
+    setError("");
+    setMessage("");
+    if (!user) return;
 
-  try {
-    await returnExpertById(user.id);
+    try {
+      await returnExpertById(user.id);
 
-    const ex = await getExpertByIdJustToTheUser(user.id);
+      const ex = await getExpertByIdJustToTheUser(user.id);
 
-    if (ex) {
-      setExpertFormData({
-        category: ex.category || "",
-        bio: ex.bio || "",
-        basePrice: ex.basePrice || ""
+      if (ex) {
+        setExpertFormData({
+          category: ex.category || "",
+          bio: ex.bio || "",
+          basePrice: ex.basePrice || ""
+        });
+
+        setHasExpertProfile(true);
+      }
+
+      setUser({
+        ...user,
+        isExpert: true
       });
 
-      setHasExpertProfile(true);
+      setShowExpertDetails(true);
+      setMessage("פרופיל המומחה הוחזר בהצלחה");
+    } catch (err: any) {
+      setError(err.response?.data?.message || "החזרת מומחה נכשלה");
     }
-
-    setUser({
-      ...user,
-      isExpert: true
-    });
-
-    setShowExpertDetails(true);
-    setMessage("פרופיל המומחה הוחזר בהצלחה");
-  } catch (err: any) {
-    setError(err.response?.data?.message || "החזרת מומחה נכשלה");
   }
-}
 
 
   return (
@@ -262,34 +264,34 @@ function handleExpertChange(
                     <option value="שיפוצים">שיפוצים</option>
                     <option value="מיזוג אוויר">מיזוג אוויר</option>
                     <option value="מנעולנות">מנעולנות</option>
-             </optgroup>
-           
-              <optgroup label="תחזוקה ושירותים">
-    <option value="טכנאות מחשבים">טכנאות מחשבים</option>
-                <option value="ניקיון">ניקיון</option>
-                <option value="גינון">גינון</option>
-                <option value="הדברה">הדברה</option>
-                <option value="הובלות">הובלות</option>
-              </optgroup>
+                  </optgroup>
 
-              <optgroup label="דיגיטל ויצירה">
-                <option value="עיצוב גרפי">עיצוב גרפי</option>
-                <option value="פיתוח תוכנה">פיתוח תוכנה</option>
-                <option value="בניית אתרים">בניית אתרים</option>
-                <option value="צילום">צילום</option>
-              </optgroup>
-            
-              <optgroup label="שירותים מקצועיים">
-                <option value="ייעוץ עסקי">ייעוץ עסקי</option>
-                <option value="ראיית חשבון">ראיית חשבון</option>
-                <option value="עריכת דין">עריכת דין</option>
-                <option value="אימון אישי">אימון אישי</option>
-              </optgroup>
-            
-              <optgroup label="אפשרויות נוספות">
-                <option value="אחר">אחר</option>
-              </optgroup>
-            </select>
+                  <optgroup label="תחזוקה ושירותים">
+                    <option value="טכנאות מחשבים">טכנאות מחשבים</option>
+                    <option value="ניקיון">ניקיון</option>
+                    <option value="גינון">גינון</option>
+                    <option value="הדברה">הדברה</option>
+                    <option value="הובלות">הובלות</option>
+                  </optgroup>
+
+                  <optgroup label="דיגיטל ויצירה">
+                    <option value="עיצוב גרפי">עיצוב גרפי</option>
+                    <option value="פיתוח תוכנה">פיתוח תוכנה</option>
+                    <option value="בניית אתרים">בניית אתרים</option>
+                    <option value="צילום">צילום</option>
+                  </optgroup>
+
+                  <optgroup label="שירותים מקצועיים">
+                    <option value="ייעוץ עסקי">ייעוץ עסקי</option>
+                    <option value="ראיית חשבון">ראיית חשבון</option>
+                    <option value="עריכת דין">עריכת דין</option>
+                    <option value="אימון אישי">אימון אישי</option>
+                  </optgroup>
+
+                  <optgroup label="אפשרויות נוספות">
+                    <option value="אחר">אחר</option>
+                  </optgroup>
+                </select>
               </div>
 
               <div>
@@ -312,6 +314,7 @@ function handleExpertChange(
               </div>
 
               <button type="submit">שמור פרטי מומחה</button>
+              <button type="button" onClick={() => navigate(`/expert/${user.id}`)}>הביקורות שלי</button>
               <button type="button" onClick={handleDeleteExpert}>
                 הפוך פרופיל מומחה ללא פעיל
               </button>
